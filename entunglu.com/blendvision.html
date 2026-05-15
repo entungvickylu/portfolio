@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlendVision AiSK — Vicky Lu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #1B1BF5; --dark: #111111; --mid: #555555;
+      --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+
+    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+      z-index: 100; animation: slideDown .6s ease both;
+    }
+    .logo-box {
+      display: inline-flex; align-items: center; text-decoration: none;
+      opacity: 1; transition: opacity .2s;
+    }
+    .logo-box:hover { opacity: 0.75; }
+    .logo-box img { height: 48px; width: auto; display: block; }
+
+    nav ul { list-style: none; display: flex; gap: 36px; }
+    nav ul li a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
+      transition: color .2s; position: relative; padding-bottom: 3px;
+    }
+    nav ul li a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+      height: 1.5px; background: var(--blue); transition: right .25s ease;
+    }
+    nav ul li a:hover::after { right: 0; }
+    nav ul li a:hover { color: var(--dark); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 24px; flex-direction: column; gap: 20px; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
+
+    /* ── HERO ── */
+    .project-hero {
+      padding: calc(var(--nav-h) + 56px) 48px 0;
+      animation: fadeUp .8s .15s ease both;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--light); text-decoration: none; margin-bottom: 40px;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--blue); }
+    .back-link span { font-size: 16px; transition: transform .2s; }
+    .back-link:hover span { transform: translateX(-4px); }
+
+    .project-meta {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .meta-tag {
+      font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--blue); border: 1px solid var(--blue); padding: 4px 10px;
+    }
+
+    .project-title {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(32px, 5vw, 60px); line-height: 1.08;
+      letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px;
+    }
+    .project-title em { font-style: italic; color: var(--blue); }
+
+    .project-subtitle {
+      font-size: 18px; color: var(--mid); line-height: 1.65;
+      max-width: 680px; margin-bottom: 48px;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .stat {
+      padding: 28px 24px; border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .stat-value { font-size: 16px; font-weight: 600; color: var(--dark); }
+
+    /* ── COVER IMAGE ── */
+    .project-cover {
+      width: 100%; aspect-ratio: 16/7; background: linear-gradient(135deg, #e8eaff 0%, #c5caff 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: rgba(0,0,0,.2);
+      overflow: hidden;
+    }
+    .project-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── CONTENT ── */
+    .project-content { max-width: 800px; margin: 0 auto; padding: 80px 48px; }
+
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 12px;
+    }
+    .section-heading {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(24px, 3vw, 36px); line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .section-text {
+      font-size: 16px; line-height: 1.8; color: var(--mid); margin-bottom: 16px;
+    }
+    .content-divider { border: none; border-top: 1px solid var(--border); margin: 60px 0; }
+
+    /* Impact numbers */
+    .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); margin: 32px 0; }
+    .impact-item { padding: 32px 24px; border-right: 1px solid var(--border); text-align: center; }
+    .impact-item:last-child { border-right: none; }
+    .impact-num { font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--blue); display: block; margin-bottom: 8px; }
+    .impact-desc { font-size: 14px; color: var(--mid); line-height: 1.5; }
+
+    /* Image block */
+    .img-block {
+      width: 100%; aspect-ratio: 16/9; background: #f5f5f5;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #bbb;
+      margin: 32px 0; overflow: hidden;
+    }
+    .img-block img { width: 100%; height: 100%; object-fit: cover; }
+    .img-caption { font-size: 13px; color: var(--light); text-align: center; margin-top: -20px; margin-bottom: 32px; font-style: italic; }
+
+    /* Insight cards */
+    .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .insight-card { border: 1px solid var(--border); padding: 24px; }
+    .insight-num { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .insight-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+    .insight-text { font-size: 14px; color: var(--mid); line-height: 1.65; font-style: italic; }
+
+    /* Outcomes */
+    .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 24px 0; }
+    .outcome-item { padding: 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .outcome-item:nth-child(3n) { border-right: none; }
+    .outcome-icon { font-size: 24px; margin-bottom: 12px; }
+    .outcome-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .outcome-text { font-size: 13px; color: var(--mid); line-height: 1.6; }
+
+    /* ── NEXT PROJECT ── */
+    .next-project {
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 48px; text-decoration: none; color: var(--dark);
+      transition: background .2s;
+    }
+    .next-project:hover { background: #fafafa; }
+    .next-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; }
+    .next-arrow { font-size: 32px; color: var(--blue); transition: transform .3s; }
+    .next-project:hover .next-arrow { transform: translateX(8px); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    footer {
+      padding: 24px 48px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    footer p { font-size: 13px; color: var(--light); }
+    footer nav ul { list-style: none; display: flex; gap: 24px; }
+    footer nav ul li a { text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; }
+    footer nav ul li a:hover { color: var(--dark); }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .project-hero { padding: calc(var(--nav-h) + 32px) 24px 0; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .project-content { padding: 48px 24px; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .impact-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .insight-grid { grid-template-columns: 1fr; }
+      .outcome-grid { grid-template-columns: 1fr 1fr; }
+      .next-project { padding: 32px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 60px; }
+      nav { padding: 0 20px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .outcome-grid { grid-template-columns: 1fr; }
+      .outcome-item { border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="../index.html" class="logo-box">
+    <img src="../ENTUNGLU_logo-02.webp" alt="En Tung Lu" />
+  </a>
+  <ul>
+    <li><a href="../index.html" class="nav-link">Portfolio</a></li>
+    <li><a href="../about.html" class="nav-link">About / Service</a></li>
+    <li><a href="../contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../index.html">Portfolio</a>
+  <a href="../about.html">About / Service</a>
+  <a href="../contact.html">Contact</a>
+</div>
+
+<main>
+  <div class="project-hero">
+    <a href="../index.html" class="back-link"><span>←</span> Back to Portfolio</a>
+
+    <div class="project-meta">
+      <span class="meta-tag">AI & LLM</span>
+      <span class="meta-tag">SaaS</span>
+      <span class="meta-tag">Web</span>
+    </div>
+
+    <h1 class="project-title">AI Solution to <em>Empower</em><br>Digital Multimedia</h1>
+    <p class="project-subtitle">An AI-powered chat solution to manage and access all your video knowledge in one place, making communication and knowledge sharing easier.</p>
+
+    <div class="stats-row">
+      <div class="stat"><div class="stat-label">Company</div><div class="stat-value">KKCompany</div></div>
+      <div class="stat"><div class="stat-label">Platform</div><div class="stat-value">Web</div></div>
+      <div class="stat"><div class="stat-label">Date</div><div class="stat-value">2023–2024</div></div>
+      <div class="stat"><div class="stat-label">Role</div><div class="stat-value">Product Designer</div></div>
+    </div>
+  </div>
+
+  <!-- Cover Image -->
+  <div class="project-cover">Cover Image — Replace with actual project screenshot</div>
+
+  <div class="project-content">
+
+    <!-- Challenge -->
+    <div class="reveal">
+      <p class="section-label">The Challenge</p>
+      <h2 class="section-heading">How to transform videos into accessible knowledge using AI</h2>
+      <p class="section-text">How to transform videos into knowledge and make that knowledge easily discoverable using AI. This requires efficiently processing and extracting key information from videos while ensuring that the knowledge is searchable and accessible.</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Impact -->
+    <div class="reveal">
+      <p class="section-label">How Did I Have Impact?</p>
+      <div class="impact-grid">
+        <div class="impact-item"><span class="impact-num">01</span><div class="impact-desc">Collaboration Across Teams<br><span style="color:var(--light);font-size:13px;">Enhancing Product Design and Development</span></div></div>
+        <div class="impact-item"><span class="impact-num">02</span><div class="impact-desc">Aligning Stakeholders<br><span style="color:var(--light);font-size:13px;">Establishing a Unified Vision</span></div></div>
+        <div class="impact-item"><span class="impact-num">03</span><div class="impact-desc">Influencing Organizational Structure<br><span style="color:var(--light);font-size:13px;">Sharing Knowledge and Insights</span></div></div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Research -->
+    <div class="reveal">
+      <p class="section-label">Research Insights</p>
+      <h2 class="section-heading">Understanding user pain points and market needs</h2>
+      <p class="section-text">Working with product owners on researching user journeys and competitive analysis helped to understand user pain points and develop a product strategy.</p>
+      <div class="img-block">Project Research Image</div>
+      <p class="img-caption">Research process — user journey mapping and competitive analysis</p>
+
+      <div class="insight-grid">
+        <div class="insight-card">
+          <div class="insight-num">Insight 01</div>
+          <div class="insight-title">Solving Customer Problems with Simple Steps</div>
+          <p class="insight-text">The design should be easy to use and efficient, allowing users to set up and start using the AI quickly, without needing technical expertise.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-num">Insight 02</div>
+          <div class="insight-title">Customization and Integration Drive User Adoption</div>
+          <p class="insight-text">To make the product popular with users, it needs to be easily customizable and integrate smoothly into current business workflows.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Design -->
+    <div class="reveal">
+      <p class="section-label">Design Exploration</p>
+      <h2 class="section-heading">How to create in 3 steps</h2>
+      <p class="section-text">Based on the research insights and detailed analysis, we began the process of finding solutions — describing the user's steps from previewing and publishing the solution to managing different data sources.</p>
+      <div class="img-block">Design Exploration Image</div>
+      <p class="img-caption">Design system and interaction flows</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Outcomes -->
+    <div class="reveal">
+      <p class="section-label">Outcomes</p>
+      <h2 class="section-heading">Results that made a difference</h2>
+      <div class="outcome-grid">
+        <div class="outcome-item">
+          <div class="outcome-icon">⚡</div>
+          <div class="outcome-title">No-code Setup in Minutes</div>
+          <p class="outcome-text">Users can create their own conversational AI in just a few minutes, even in a no-code environment.</p>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-icon">🏆</div>
+          <div class="outcome-title">Bronze Award — MTE 2024</div>
+          <p class="outcome-text">Won Bronze in the ICT category at the Malaysia Technology Expo 2024.</p>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-icon">✦</div>
+          <div class="outcome-title">AI + BlendVision Integration</div>
+          <p class="outcome-text">Merges AI technology with existing BlendVision modules, elevating functionality and user experience.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Next Project -->
+  <a href="telasa.html" class="next-project reveal">
+    <div>
+      <div class="next-label">Next Project</div>
+      <div class="next-title">TelASA Streaming Platform</div>
+    </div>
+    <span class="next-arrow">→</span>
+  </a>
+</main>
+
+<footer>
+  <p>© 2025 En Tung Vicky Lu</p>
+  <nav><ul>
+    <li><a href="../index.html">Portfolio</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul></nav>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => ro.observe(r));
+</script>
+</body>
+</html>

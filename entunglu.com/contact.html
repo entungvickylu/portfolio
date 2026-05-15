@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — En Tung Vicky Lu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #1B1BF5; --dark: #111111; --mid: #555555;
+      --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+
+    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); border-bottom: 1px solid transparent;
+      z-index: 100; transition: border-color .3s; animation: slideDown .6s ease both;
+    }
+    nav.scrolled { border-color: var(--border); }
+    .logo-box {
+      display: inline-flex; align-items: center; text-decoration: none;
+      opacity: 1; transition: opacity .2s;
+    }
+    .logo-box:hover { opacity: 0.75; }
+    .logo-box img { height: 48px; width: auto; display: block; }
+    nav ul { list-style: none; display: flex; gap: 36px; }
+    nav ul li a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
+      transition: color .2s; position: relative; padding-bottom: 3px;
+    }
+    nav ul li a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+      height: 1.5px; background: var(--blue); transition: right .25s ease;
+    }
+    nav ul li a:hover::after, nav ul li a.active::after { right: 0; }
+    nav ul li a:hover, nav ul li a.active { color: var(--dark); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 24px; flex-direction: column; gap: 20px; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
+
+    /* ── CONTACT MAIN ── */
+    main {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: calc(var(--nav-h) + 40px) 48px 80px;
+    }
+    .contact-inner {
+      max-width: 720px; width: 100%;
+      animation: fadeUp .8s .2s ease both;
+    }
+
+    .contact-title {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(40px, 5.5vw, 68px); line-height: 1.05;
+      letter-spacing: -.03em; margin-bottom: 32px;
+    }
+
+    /* ── TAIPEI TIME WIDGET ── */
+    .taipei-time {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--border); padding: 10px 18px;
+      margin-bottom: 36px; background: #fafafa;
+    }
+    .tt-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #22c55e;
+      animation: pulse 2s ease infinite; flex-shrink: 0;
+    }
+    .tt-time {
+      font-size: 13px; font-weight: 600; color: var(--dark); letter-spacing: .03em;
+      font-variant-numeric: tabular-nums;
+    }
+    .tt-sep { color: var(--border); font-size: 13px; }
+    .tt-location { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--light); }
+    .tt-pipe { color: var(--border); margin: 0 2px; }
+    .tt-status { font-size: 12px; color: var(--blue); font-weight: 500; }
+
+    /* ── BODY TEXT ── */
+    .contact-text {
+      font-size: 16px; color: var(--mid); line-height: 1.8;
+      margin-bottom: 14px; max-width: 640px;
+    }
+    .contact-bilingual {
+      font-size: 13px; letter-spacing: .04em; color: var(--light);
+      margin-bottom: 40px;
+    }
+    .contact-bilingual span { color: var(--dark); font-weight: 500; }
+
+    /* ── AVAILABILITY NOTE ── */
+    .contact-availability {
+      font-size: 13px; color: var(--light); line-height: 1.7;
+      border-left: 2px solid var(--blue); padding-left: 16px;
+      margin-bottom: 40px; max-width: 560px;
+    }
+
+    /* ── BUTTONS ── */
+    .contact-btns {
+      display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap;
+    }
+    .btn-outline {
+      display: inline-block; padding: 14px 32px;
+      border: 1.5px solid var(--blue); color: var(--blue);
+      font-size: 12px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .btn-outline:hover { background: var(--blue); color: #fff; }
+    .btn-outline.btn-ghost {
+      border-color: var(--border); color: var(--mid);
+    }
+    .btn-outline.btn-ghost:hover { border-color: var(--dark); background: var(--dark); color: #fff; }
+
+    /* ── SOCIAL ICONS ── */
+    .social-row { display: flex; align-items: center; gap: 10px; }
+    .social-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: transparent; border: 1.5px solid var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; transition: background .2s, border-color .2s;
+    }
+    .social-icon:hover { background: var(--blue); border-color: var(--blue); }
+    .social-icon svg { width: 18px; height: 18px; fill: var(--dark); transition: fill .2s; }
+    .social-icon:hover svg { fill: #fff; }
+    .social-label {
+      font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--light); margin-left: 4px;
+    }
+
+    /* ── DIVIDER ── */
+    .contact-divider { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 24px 48px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    footer p { font-size: 13px; color: var(--light); }
+    footer nav ul { list-style: none; display: flex; gap: 24px; }
+    footer nav ul li a { text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; }
+    footer nav ul li a:hover { color: var(--dark); }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      main { padding: calc(var(--nav-h) + 32px) 24px 60px; }
+      .contact-btns { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+      .taipei-time { flex-wrap: wrap; }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 60px; }
+      nav { padding: 0 20px; }
+    }
+      footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="logo-box">
+    <img src="ENTUNGLU_logo.png" alt="En Tung Lu" />
+  </a>
+  <ul>
+    <li><a href="index.html" class="nav-link">Portfolio</a></li>
+    <li><a href="about.html" class="nav-link">About / Service</a></li>
+    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Portfolio</a>
+  <a href="about.html">About / Service</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main>
+  <div class="contact-inner">
+
+    <h1 class="contact-title">Let's Collaborate</h1>
+
+    <div class="taipei-time">
+      <span class="tt-dot"></span>
+      <span class="tt-time" id="taipeiTime">--:-- --</span>
+      <span class="tt-pipe">|</span>
+      <span class="tt-location">Taipei, Taiwan</span>
+      <span class="tt-sep">·</span>
+      <span class="tt-status">Open for new collaborations</span>
+    </div>
+
+    <p class="contact-text">Based in Taipei, delivering strategic design solutions across North America, Japan, and the Asia-Pacific. I specialize in navigating complex product challenges — from new ventures and product pivots to experimental prototypes.</p>
+    <p class="contact-text">Whether you're looking for a long-term strategic partner or a fresh perspective to solve a difficult product puzzle — let's build something impactful.</p>
+
+    <p class="contact-bilingual">Bilingual Support: <span>English & Mandarin</span> &nbsp;（中文也通）</p>
+
+    <p class="contact-availability">I'm currently available for product strategy, high-complexity UX solutions, and rapid prototyping. Let's discuss how I can help navigate your product's next challenge.</p>
+
+    <div class="contact-btns">
+      <a href="mailto:entungvickylu@gmail.com" class="btn-outline">Email Me Directly</a>
+      <a href="about.html#services" class="btn-outline btn-ghost">View My Services</a>
+    </div>
+
+    <hr class="contact-divider" />
+
+    <div class="social-row">
+      <a href="mailto:entungvickylu@gmail.com" class="social-icon" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/entungvickylu/" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <span class="social-label">entungvickylu@gmail.com &nbsp;·&nbsp; linkedin.com/in/entungvickylu</span>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 En Tung Vicky Lu — Product Designer</p>
+  <nav><ul>
+    <li><a href="index.html">Portfolio</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul></nav>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+    hamburger.classList.remove('open'); mobileMenu.classList.remove('open');
+  }));
+
+  // Live Taipei time
+  function updateTime() {
+    const now = new Date();
+    const taipei = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Taipei' }));
+    const h = taipei.getHours();
+    const m = String(taipei.getMinutes()).padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = h % 12 || 12;
+    document.getElementById('taipeiTime').textContent = `${h12}:${m} ${ampm}`;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+</script>
+</body>
+</html>

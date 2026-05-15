@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>En Tung Vicky Lu — Product Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #1B1BF5; --dark: #111111; --mid: #555555;
+      --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); border-bottom: 1px solid transparent;
+      z-index: 100; transition: border-color .3s;
+      animation: slideDown .6s ease both;
+    }
+    nav.scrolled { border-color: var(--border); }
+
+    .logo-box {
+      display: inline-flex; align-items: center; text-decoration: none;
+      opacity: 1; transition: opacity .2s;
+    }
+    .logo-box:hover { opacity: 0.75; }
+    .logo-box img { height: 48px; width: auto; display: block; }
+
+    nav ul { list-style: none; display: flex; gap: 36px; }
+    nav ul li a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
+      transition: color .2s; position: relative; padding-bottom: 3px;
+    }
+    nav ul li a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+      height: 1.5px; background: var(--blue); transition: right .25s ease;
+    }
+    nav ul li a:hover::after, nav ul li a.active::after { right: 0; }
+    nav ul li a:hover, nav ul li a.active { color: var(--dark); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 24px; flex-direction: column; gap: 20px; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
+
+    .hero {
+      padding: calc(var(--nav-h) + 56px) 48px 36px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(32px, 5vw, 64px); line-height: 1.08; letter-spacing: -.02em;
+      animation: fadeUp .8s .2s ease both;
+    }
+    .hero h1 em { font-style: italic; color: var(--blue); }
+    .hero-sub {
+      font-size: 13px; color: var(--light); letter-spacing: .08em; text-transform: uppercase;
+      animation: fadeUp .8s .35s ease both; align-self: flex-end; padding-bottom: 6px;
+    }
+
+    .filter-bar {
+      padding: 0 48px 28px; display: flex; gap: 8px; flex-wrap: wrap;
+      animation: fadeIn .8s .5s ease both;
+    }
+    .filter-btn {
+      padding: 8px 18px; border: 1.5px solid var(--border); background: none;
+      font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
+      cursor: pointer; transition: all .2s;
+    }
+    .filter-btn:hover { border-color: var(--dark); color: var(--dark); }
+    .filter-btn.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+
+    .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; padding: 0 48px 80px; }
+
+    .portfolio-item {
+      position: relative; aspect-ratio: 16/10; overflow: hidden;
+      cursor: pointer; background: #f0f0f0;
+    }
+    .portfolio-item.hidden { display: none; }
+    .portfolio-item:nth-child(1) { animation: fadeUp .7s .4s ease both; }
+    .portfolio-item:nth-child(2) { animation: fadeUp .7s .5s ease both; }
+    .portfolio-item:nth-child(3) { animation: fadeUp .7s .6s ease both; }
+    .portfolio-item:nth-child(4) { animation: fadeUp .7s .7s ease both; }
+
+    .portfolio-item a { display: block; width: 100%; height: 100%; text-decoration: none; }
+
+    .item-bg {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      transition: transform .6s cubic-bezier(.25,.46,.45,.94);
+    }
+    .portfolio-item:hover .item-bg { transform: scale(1.05); }
+
+    .ph-1 { background: linear-gradient(135deg, #e8eaff 0%, #c5caff 100%); }
+    .ph-2 { background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 100%); }
+    .ph-3 { background: linear-gradient(135deg, #f5f0ea 0%, #e0d5c5 100%); }
+    .ph-4 { background: linear-gradient(135deg, #e8f4ff 0%, #b8d8ff 100%); }
+    .ph-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(0,0,0,.18); font-weight: 500; }
+    .ph-2 .ph-label { color: rgba(255,255,255,.18); }
+
+    .portfolio-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,20,.8) 0%, transparent 55%);
+      opacity: 0; transition: opacity .3s;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
+    }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+    .view-arrow {
+      position: absolute; top: 20px; right: 20px;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,255,255,.15); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; opacity: 0; transform: scale(.7) rotate(-45deg);
+      transition: opacity .3s, transform .3s;
+    }
+    .portfolio-item:hover .view-arrow { opacity: 1; transform: scale(1) rotate(0deg); }
+
+    .portfolio-label { transform: translateY(10px); transition: transform .3s ease; }
+    .portfolio-item:hover .portfolio-label { transform: translateY(0); }
+    .portfolio-label h3 { font-size: 17px; font-weight: 500; color: #fff; margin-bottom: 8px; }
+    .portfolio-label .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag { font-size: 11px; letter-spacing: .06em; color: rgba(255,255,255,.65); background: rgba(255,255,255,.1); padding: 3px 8px; }
+
+    footer {
+      padding: 24px 48px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    footer p { font-size: 13px; color: var(--light); }
+    footer nav ul { gap: 24px; }
+    footer nav ul li a { font-size: 12px; }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: calc(var(--nav-h) + 32px) 24px 24px; flex-direction: column; align-items: flex-start; gap: 10px; }
+      .hero-sub { align-self: flex-start; }
+      .filter-bar { padding: 0 24px 20px; }
+      .portfolio-grid { grid-template-columns: 1fr; padding: 0 24px 60px; }
+      .portfolio-item { aspect-ratio: 16/9; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+      footer nav ul { justify-content: center; }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 60px; }
+      nav { padding: 0 20px; }
+      .hero { padding: calc(var(--nav-h) + 24px) 20px 16px; }
+      .filter-bar { padding: 0 20px 16px; }
+      .portfolio-grid { padding: 0 20px 48px; gap: 2px; }
+    }
+      footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="logo-box">
+    <img src="ENTUNGLU_logo.png" alt="En Tung Lu" />
+  </a>
+  <ul>
+    <li><a href="index.html" class="nav-link active">Portfolio</a></li>
+    <li><a href="about.html" class="nav-link">About / Service</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Portfolio</a>
+  <a href="about.html">About / Service</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main>
+  <div class="hero">
+    <h1>Product <em>Designer</em><br>& UI/UX Specialist</h1>
+    <p class="hero-sub">10+ Years Experience</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="ai">AI & LLM</button>
+    <button class="filter-btn" data-filter="saas">SaaS</button>
+    <button class="filter-btn" data-filter="streaming">Streaming</button>
+    <button class="filter-btn" data-filter="hr">Human Resource</button>
+  </div>
+
+  <div class="portfolio-grid">
+
+    <div class="portfolio-item" data-category="ai saas">
+      <a href="projects/blendvision.html">
+        <div class="item-bg ph-1"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>BlendVision AiSK</h3>
+            <div class="tags"><span class="tag">AI & LLM</span><span class="tag">SaaS</span><span class="tag">2023–2024</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="streaming">
+      <a href="projects/telasa.html">
+        <div class="item-bg ph-2"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>TelASA Streaming Platform</h3>
+            <div class="tags"><span class="tag">Streaming</span><span class="tag">Smart TV</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="hr saas">
+      <a href="projects/leadership.html">
+        <div class="item-bg ph-3"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>Leadership Development Platform</h3>
+            <div class="tags"><span class="tag">Human Resource</span><span class="tag">Web</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="hr saas">
+      <a href="projects/employee.html">
+        <div class="item-bg ph-4"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>Employee Profile System</h3>
+            <div class="tags"><span class="tag">Human Resource</span><span class="tag">SaaS</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>© 2025 En Tung Vicky Lu — Product Designer</p>
+  <nav><ul>
+    <li><a href="index.html" class="nav-link">Portfolio</a></li>
+    <li><a href="about.html" class="nav-link">About</a></li>
+    <li><a href="contact.html" class="nav-link">Contact</a></li>
+  </ul></nav>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+    hamburger.classList.remove('open'); mobileMenu.classList.remove('open');
+  }));
+
+  // Filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.portfolio-item').forEach(item => {
+        const cats = item.dataset.category || '';
+        item.classList.toggle('hidden', f !== 'all' && !cats.includes(f));
+      });
+    });
+  });
+</script>
+</body>
+</html>

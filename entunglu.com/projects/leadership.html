@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leadership Development Platform — Vicky Lu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #1B1BF5; --dark: #111111; --mid: #555555;
+      --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+
+    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+      z-index: 100; animation: slideDown .6s ease both;
+    }
+    .logo-box { display: inline-flex; align-items: center; text-decoration: none; opacity: 1; transition: opacity .2s; }
+    .logo-box:hover { opacity: 0.75; }
+    .logo-box img { height: 48px; width: auto; display: block; }
+    nav ul { list-style: none; display: flex; gap: 36px; }
+    nav ul li a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
+      transition: color .2s; position: relative; padding-bottom: 3px;
+    }
+    nav ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 100%; height: 1.5px; background: var(--blue); transition: right .25s ease; }
+    nav ul li a:hover::after { right: 0; }
+    nav ul li a:hover { color: var(--dark); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px; flex-direction: column; gap: 20px; z-index: 99; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
+
+    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 0; animation: fadeUp .8s .15s ease both; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s;
+    }
+    .back-link:hover { color: var(--blue); }
+    .back-link span { font-size: 16px; transition: transform .2s; }
+    .back-link:hover span { transform: translateX(-4px); }
+    .project-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .meta-tag { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); padding: 4px 10px; }
+    .project-title {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(32px, 5vw, 60px); line-height: 1.08;
+      letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px;
+    }
+    .project-title em { font-style: italic; color: var(--blue); }
+    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; margin-bottom: 48px; }
+
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .stat { padding: 28px 32px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .stat-val { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--dark); }
+
+    .hero-image {
+      margin-top: 48px;
+      width: 100%; aspect-ratio: 16/7; background: linear-gradient(135deg, #f5f0ea 0%, #e0d5c5 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-image-label { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: rgba(0,0,0,.2); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    .content-section { padding: 80px 48px; border-bottom: 1px solid var(--border); }
+    .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-heading {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(26px, 3.5vw, 40px); line-height: 1.2;
+      letter-spacing: -.02em; margin-bottom: 32px;
+    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .body-text { font-size: 16px; color: var(--mid); line-height: 1.85; }
+    .body-text p + p { margin-top: 20px; }
+    .highlight-box { padding: 32px; background: #fafafa; border-left: 3px solid var(--blue); }
+    .highlight-box p { font-size: 16px; color: var(--dark); line-height: 1.75; font-style: italic; }
+    .img-placeholder {
+      width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, #f5f0ea 0%, #d5c8b5 100%);
+      display: flex; align-items: center; justify-content: center; margin: 32px 0;
+    }
+    .img-placeholder span { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(0,0,0,.2); }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); }
+    .insight-card { padding: 32px 28px; border-right: 1px solid var(--border); }
+    .insight-card:last-child { border-right: none; }
+    .insight-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+    .insight-card p { font-size: 14px; color: var(--mid); line-height: 1.7; }
+    .insight-num { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--blue); display: block; margin-bottom: 8px; }
+
+    .next-project {
+      display: block; padding: 64px 48px; background: var(--dark); color: #fff;
+      text-decoration: none; transition: background .3s;
+    }
+    .next-project:hover { background: #1a1a1a; }
+    .next-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 4vw, 48px); line-height: 1.1; }
+    .next-arrow { font-size: 32px; margin-top: 20px; display: block; transition: transform .3s; }
+    .next-project:hover .next-arrow { transform: translateX(8px); }
+
+    footer { padding: 24px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    footer p { font-size: 13px; color: var(--light); }
+    footer nav ul { list-style: none; display: flex; gap: 24px; }
+    footer nav ul li a { text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; }
+    footer nav ul li a:hover { color: var(--dark); }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .project-hero { padding: calc(var(--nav-h) + 32px) 24px 0; }
+      .content-section { padding: 56px 24px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .two-col { grid-template-columns: 1fr; gap: 36px; }
+      .three-col { grid-template-columns: 1fr; }
+      .insight-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .insight-card:last-child { border-bottom: none; }
+      .next-project { padding: 48px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 60px; }
+      nav { padding: 0 20px; }
+      .stats-row { grid-template-columns: 1fr; }
+    }
+      footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="../index.html" class="logo-box">
+    <img src="../ENTUNGLU_logo.png" alt="En Tung Lu" />
+  </a>
+  <ul>
+    <li><a href="../index.html" class="nav-link">Portfolio</a></li>
+    <li><a href="../about.html" class="nav-link">About / Service</a></li>
+    <li><a href="../contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../index.html">Portfolio</a>
+  <a href="../about.html">About / Service</a>
+  <a href="../contact.html">Contact</a>
+</div>
+
+<main>
+  <div class="project-hero">
+    <a href="../index.html" class="back-link"><span>←</span> Back to Portfolio</a>
+    <div class="project-meta">
+      <span class="meta-tag">Human Resource</span>
+      <span class="meta-tag">Web</span>
+      <span class="meta-tag">EdTech</span>
+    </div>
+    <h1 class="project-title">Leadership <em>Development</em><br>Platform</h1>
+    <p class="project-subtitle">Designing a web-based platform that helps organizations identify, track, and grow leadership capability across teams — translating complex HR frameworks into a clear, actionable product.</p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <p class="stat-label">Platform</p>
+        <p class="stat-val">Web (SaaS)</p>
+      </div>
+      <div class="stat">
+        <p class="stat-label">My Role</p>
+        <p class="stat-val">Lead Product Designer</p>
+      </div>
+      <div class="stat">
+        <p class="stat-label">Industry</p>
+        <p class="stat-val">HR / EdTech</p>
+      </div>
+      <div class="stat">
+        <p class="stat-label">Focus</p>
+        <p class="stat-val">Research · UX · System Design</p>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <span class="hero-image-label">Project Cover Image</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="content-section reveal">
+    <div class="two-col">
+      <div>
+        <p class="section-eyebrow">01 — Overview</p>
+        <h2 class="section-heading">Turning leadership data into growth opportunities</h2>
+        <div class="body-text">
+          <p>Organizations invest heavily in leadership development programs but often struggle to measure impact or make them actionable at scale. This platform was designed to bridge the gap between HR assessment frameworks and the day-to-day tools managers use.</p>
+          <p>My role covered the full product design process: from stakeholder interviews and HR framework analysis to information architecture, interaction design, and design system creation.</p>
+        </div>
+      </div>
+      <div>
+        <div class="highlight-box">
+          <p>"HR teams had the data. Managers had no idea what to do with it. The design challenge was translating complex competency models into clear, motivating next steps."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHALLENGE -->
+  <div class="content-section reveal">
+    <p class="section-eyebrow">02 — The Challenge</p>
+    <h2 class="section-heading">Complex frameworks, human-scale interface</h2>
+    <div class="three-col">
+      <div class="insight-card">
+        <span class="insight-num">01</span>
+        <h4>Multi-Stakeholder Needs</h4>
+        <p>HR administrators, managers, and individual employees each needed a different view of the same underlying data — with different levels of access and different goals.</p>
+      </div>
+      <div class="insight-card">
+        <span class="insight-num">02</span>
+        <h4>Complex Data Visualization</h4>
+        <p>Leadership competency scores, 360° feedback, and development progress needed to be presented clearly without overwhelming users or requiring HR expertise to interpret.</p>
+      </div>
+      <div class="insight-card">
+        <span class="insight-num">03</span>
+        <h4>Driving Action</h4>
+        <p>The platform needed to move users from passive assessment to active development — surfacing recommended actions, learning resources, and progress milestones.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="content-section reveal">
+    <p class="section-eyebrow">03 — Design Process</p>
+    <h2 class="section-heading">Research → Architecture → Iteration</h2>
+    <div class="body-text">
+      <p>I started by interviewing HR directors and team managers to understand how they currently use leadership data and where decisions break down. Mapping the user journey revealed that most "development" happened in annual review cycles — not ongoing. The product needed to change that cadence.</p>
+    </div>
+    <div class="img-placeholder"><span>Research & Wireframe Screenshots</span></div>
+    <div class="two-col">
+      <div class="body-text">
+        <p>The dashboard architecture centered on three views: individual growth (employee-facing), team health (manager-facing), and organizational overview (HR admin). Each view shared the same underlying data model but surfaced different insights and calls-to-action.</p>
+      </div>
+      <div class="body-text">
+        <p>Iterating with HR stakeholders, we simplified the competency visualization from a complex radar chart to a tiered progress system that was immediately readable. Design system components were built to scale across all three permission levels.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUTCOME -->
+  <div class="content-section reveal">
+    <p class="section-eyebrow">04 — Outcome</p>
+    <h2 class="section-heading">A platform that bridges HR strategy and daily action</h2>
+    <div class="three-col">
+      <div class="insight-card">
+        <h4>Role-Based Dashboards</h4>
+        <p>Three distinct but connected views — employee, manager, HR admin — each surfacing the right data at the right level of detail.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Competency Visualization</h4>
+        <p>Simplified complex leadership frameworks into readable progress indicators with contextual benchmarks and recommended next steps.</p>
+      </div>
+      <div class="insight-card">
+        <h4>Design System</h4>
+        <p>Built a modular component library covering data visualization, form patterns, and notification systems for scalable future feature development.</p>
+      </div>
+    </div>
+    <div class="img-placeholder" style="aspect-ratio:16/8"><span>Final UI Screenshots</span></div>
+  </div>
+
+  <a href="employee.html" class="next-project reveal">
+    <p class="next-label">Next Project</p>
+    <p class="next-title">Employee Profile System →</p>
+    <span class="next-arrow">→</span>
+  </a>
+</main>
+
+<footer>
+  <p>© 2025 En Tung Vicky Lu — Product Designer</p>
+  <nav><ul>
+    <li><a href="../index.html">Portfolio</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul></nav>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+    hamburger.classList.remove('open'); mobileMenu.classList.remove('open');
+  }));
+
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(r => ro.observe(r));
+</script>
+</body>
+</html>
