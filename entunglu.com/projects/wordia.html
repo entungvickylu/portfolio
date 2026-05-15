@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wordia — Exhibition Curation — Vicky Lu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --blue: #1B1BF5; --dark: #111111; --mid: #555555; --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; animation: slideDown .6s ease both; }
+    nav.scrolled { border-color: var(--border); }
+    .logo-box { display: inline-flex; align-items: center; text-decoration: none; opacity: 1; transition: opacity .2s; }
+    .logo-box:hover { opacity: 0.75; }
+    .logo-box img { height: 36px; width: auto; display: block; }
+    nav ul { list-style: none; display: flex; gap: 36px; }
+    nav ul li a { text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; position: relative; padding-bottom: 3px; }
+    nav ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 100%; height: 1.5px; background: var(--blue); transition: right .25s ease; }
+    nav ul li a:hover::after { right: 0; }
+    nav ul li a:hover { color: var(--dark); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px; flex-direction: column; gap: 20px; z-index: 99; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
+    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 64px; animation: fadeUp .8s .15s ease both; border-bottom: 1px solid var(--border); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s; }
+    .back-link:hover { color: var(--blue); }
+    .back-link span { font-size: 16px; transition: transform .2s; }
+    .back-link:hover span { transform: translateX(-4px); }
+    .project-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .meta-tag { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); padding: 4px 10px; }
+    .project-title { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: clamp(32px, 5vw, 60px); line-height: 1.08; letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px; }
+    .project-title em { font-style: italic; color: var(--blue); }
+    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; }
+    .next-project { display: block; padding: 64px 48px; background: var(--dark); color: #fff; text-decoration: none; transition: background .3s; }
+    .next-project:hover { background: #1a1a1a; }
+    .next-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 4vw, 48px); line-height: 1.1; }
+    .next-arrow { font-size: 32px; margin-top: 20px; display: block; transition: transform .3s; }
+    .next-project:hover .next-arrow { transform: translateX(8px); }
+    footer { padding: 24px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    footer p { font-size: 13px; color: var(--light); }
+    footer nav ul { list-style: none; display: flex; gap: 24px; }
+    footer nav ul li a { text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; }
+    footer nav ul li a:hover { color: var(--dark); }
+    footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
+    @media (max-width: 900px) { nav { padding: 0 24px; } nav ul { display: none; } .hamburger { display: flex; } .project-hero { padding: calc(var(--nav-h) + 32px) 24px 48px; } .next-project { padding: 48px 24px; } footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; } }
+    @media (max-width: 600px) { :root { --nav-h: 60px; } nav { padding: 0 20px; } }
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="../index.html" class="logo-box"><img src="../ENTUNGLU_logo.png" alt="En Tung Lu" /></a>
+  <ul>
+    <li><a href="../index.html" class="nav-link">Portfolio</a></li>
+    <li><a href="../about.html" class="nav-link">About / Service</a></li>
+    <li><a href="../contact.html" class="nav-link">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../index.html">Portfolio</a>
+  <a href="../about.html">About / Service</a>
+  <a href="../contact.html">Contact</a>
+</div>
+<main>
+  <div class="project-hero">
+    <a href="../index.html" class="back-link"><span>←</span> Back to Portfolio</a>
+    <div class="project-meta"><span class="meta-tag">Design</span><span class="meta-tag">Web</span></div>
+    <h1 class="project-title">Wordia: <em>Exhibition</em> Curation</h1>
+    <p class="project-subtitle">Case study content coming soon.</p>
+  </div>
+  <a href="tes-openday.html" class="next-project">
+    <p class="next-label">Next Project</p>
+    <p class="next-title">Taipei European School Open Day →</p>
+    <span class="next-arrow">→</span>
+  </a>
+</main>
+<footer>
+  <p>© 2026 En Tung Vicky Lu — Product Designer</p>
+  <nav><ul>
+    <li><a href="../index.html">Portfolio</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul></nav>
+</footer>
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }));
+</script>
+</body>
+</html>

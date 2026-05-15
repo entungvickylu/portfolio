@@ -35,7 +35,7 @@
       opacity: 1; transition: opacity .2s;
     }
     .logo-box:hover { opacity: 0.75; }
-    .logo-box img { height: 48px; width: auto; display: block; }
+    .logo-box { align-self: center; } .logo-box img { height: 36px; width: auto; display: block; }
 
     nav ul { list-style: none; display: flex; gap: 36px; }
     nav ul li a {
@@ -103,6 +103,11 @@
     .portfolio-item:nth-child(2) { animation: fadeUp .7s .5s ease both; }
     .portfolio-item:nth-child(3) { animation: fadeUp .7s .6s ease both; }
     .portfolio-item:nth-child(4) { animation: fadeUp .7s .7s ease both; }
+    .portfolio-item:nth-child(5) { animation: fadeUp .7s .75s ease both; }
+    .portfolio-item:nth-child(6) { animation: fadeUp .7s .8s ease both; }
+    .portfolio-item:nth-child(7) { animation: fadeUp .7s .85s ease both; }
+    .portfolio-item:nth-child(8) { animation: fadeUp .7s .9s ease both; }
+    .portfolio-item:nth-child(9) { animation: fadeUp .7s .95s ease both; }
 
     .portfolio-item a { display: block; width: 100%; height: 100%; text-decoration: none; }
 
@@ -159,7 +164,7 @@
       .hero-sub { align-self: flex-start; }
       .filter-bar { padding: 0 24px 20px; }
       .portfolio-grid { grid-template-columns: 1fr; padding: 0 24px 60px; }
-      .portfolio-item { aspect-ratio: 16/9; }
+      .portfolio-item { aspect-ratio: 16/10; }
       footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
       footer nav ul { justify-content: center; }
     }
@@ -204,21 +209,23 @@
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="ai">AI & LLM</button>
-    <button class="filter-btn" data-filter="saas">SaaS</button>
     <button class="filter-btn" data-filter="streaming">Streaming</button>
     <button class="filter-btn" data-filter="hr">Human Resource</button>
+    <button class="filter-btn" data-filter="saas">SaaS</button>
+    <button class="filter-btn" data-filter="health">Health</button>
+    <button class="filter-btn" data-filter="design">Design</button>
   </div>
 
   <div class="portfolio-grid">
 
-    <div class="portfolio-item" data-category="ai saas">
+    <div class="portfolio-item" data-category="ai saas streaming">
       <a href="projects/blendvision.html">
-        <div class="item-bg ph-1"><span class="ph-label">Project Image</span></div>
+        <div class="item-bg" style="background:linear-gradient(135deg,#ddd5f5 0%,#f5f4f0 50%,#f5ddd0 100%);display:flex;align-items:flex-end;justify-content:center;"><img src="Portfolio/BlendVision/blendvision02.png" alt="BlendVision" style="height:92%;width:auto;max-width:100%;object-fit:contain;display:block;" /></div>
         <div class="portfolio-overlay">
           <span class="view-arrow">↗</span>
           <div class="portfolio-label">
-            <h3>BlendVision AiSK</h3>
-            <div class="tags"><span class="tag">AI & LLM</span><span class="tag">SaaS</span><span class="tag">2023–2024</span></div>
+            <h3>AI Solution to Empower Digital Multimedia</h3>
+            <div class="tags"><span class="tag">AI & LLM</span><span class="tag">Streaming</span><span class="tag">SaaS</span></div>
           </div>
         </div>
       </a>
@@ -226,38 +233,103 @@
 
     <div class="portfolio-item" data-category="streaming">
       <a href="projects/telasa.html">
-        <div class="item-bg ph-2"><span class="ph-label">Project Image</span></div>
+        <div class="item-bg" style="background:linear-gradient(135deg,#0d0d1a 0%,#1a1a3e 60%,#2a1a4e 100%)"><span class="ph-label" style="color:rgba(255,255,255,.18)">Project Image</span></div>
         <div class="portfolio-overlay">
           <span class="view-arrow">↗</span>
           <div class="portfolio-label">
-            <h3>TelASA Streaming Platform</h3>
-            <div class="tags"><span class="tag">Streaming</span><span class="tag">Smart TV</span></div>
+            <h3>Refining TELASA's Streaming Experience</h3>
+            <div class="tags"><span class="tag">Streaming</span><span class="tag">Android TV</span></div>
           </div>
         </div>
       </a>
     </div>
 
     <div class="portfolio-item" data-category="hr saas">
-      <a href="projects/leadership.html">
-        <div class="item-bg ph-3"><span class="ph-label">Project Image</span></div>
+      <a href="projects/journey.html">
+        <div class="item-bg" style="background:linear-gradient(135deg,#f5f0ea 0%,#e0d5c5 100%)"><span class="ph-label">Project Image</span></div>
         <div class="portfolio-overlay">
           <span class="view-arrow">↗</span>
           <div class="portfolio-label">
-            <h3>Leadership Development Platform</h3>
-            <div class="tags"><span class="tag">Human Resource</span><span class="tag">Web</span></div>
-          </div>
-        </div>
-      </a>
-    </div>
-
-    <div class="portfolio-item" data-category="hr saas">
-      <a href="projects/employee.html">
-        <div class="item-bg ph-4"><span class="ph-label">Project Image</span></div>
-        <div class="portfolio-overlay">
-          <span class="view-arrow">↗</span>
-          <div class="portfolio-label">
-            <h3>Employee Profile System</h3>
+            <h3>Journey: The Exceptional Onboarding Product for HR Systems</h3>
             <div class="tags"><span class="tag">Human Resource</span><span class="tag">SaaS</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="hr saas">
+      <a href="projects/saas-hr.html">
+        <div class="item-bg" style="background:linear-gradient(135deg,#e8eaff 0%,#c5caff 100%)"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>SaaS Platform for Human Resource Management</h3>
+            <div class="tags"><span class="tag">SaaS</span><span class="tag">Human Resource</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="health">
+      <a href="projects/fitobe.html">
+        <div class="item-bg" style="background:linear-gradient(135deg,#e8f5ee 0%,#a8dfc0 100%)"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>FiToBe: Health and Life Platform</h3>
+            <div class="tags"><span class="tag">Health</span><span class="tag">Mobile</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="health">
+      <a href="projects/pinsoul.html">
+        <div class="item-bg" style="background:linear-gradient(135deg,#f0e8ff 0%,#d4b8ff 100%)"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>Pinsoul: Psychological Therapy App</h3>
+            <div class="tags"><span class="tag">Health</span><span class="tag">Mobile App</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="saas">
+      <a href="projects/passer.html">
+        <div class="item-bg" style="background:linear-gradient(135deg,#fff3e8 0%,#ffc89a 100%)"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>PASSER: Online Ticketing Platform</h3>
+            <div class="tags"><span class="tag">SaaS</span><span class="tag">Web</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="design">
+      <a href="projects/wordia.html">
+        <div class="item-bg" style="background:linear-gradient(135deg,#f5f5f5 0%,#d8d8d8 100%)"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>Wordia: Exhibition Curation</h3>
+            <div class="tags"><span class="tag">Design</span><span class="tag">Web</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="portfolio-item" data-category="design">
+      <a href="projects/tes-openday.html">
+        <div class="item-bg" style="background:linear-gradient(135deg,#fff0f0 0%,#ffccd5 100%)"><span class="ph-label">Project Image</span></div>
+        <div class="portfolio-overlay">
+          <span class="view-arrow">↗</span>
+          <div class="portfolio-label">
+            <h3>Taipei European School Open Day: Event Visual Design</h3>
+            <div class="tags"><span class="tag">Design</span><span class="tag">Event</span></div>
           </div>
         </div>
       </a>
