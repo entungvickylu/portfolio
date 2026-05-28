@@ -9,83 +9,596 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --blue: #1B1BF5; --dark: #111111; --mid: #555555; --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px; }
+    :root {
+      --blue: #1B1BF5; --dark: #111111; --mid: #555555;
+      --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px;
+    }
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+
     @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; animation: slideDown .6s ease both; }
-    nav.scrolled { border-color: var(--border); }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+      z-index: 100; animation: slideDown .6s ease both;
+    }
     .logo-box { display: inline-flex; align-items: center; text-decoration: none; opacity: 1; transition: opacity .2s; }
     .logo-box:hover { opacity: 0.75; }
     .logo-box img { height: 36px; width: auto; display: block; }
+
     nav ul { list-style: none; display: flex; gap: 36px; }
-    nav ul li a { text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; position: relative; padding-bottom: 3px; }
-    nav ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 100%; height: 1.5px; background: var(--blue); transition: right .25s ease; }
+    nav ul li a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
+      transition: color .2s; position: relative; padding-bottom: 3px;
+    }
+    nav ul li a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+      height: 1.5px; background: var(--blue); transition: right .25s ease;
+    }
     nav ul li a:hover::after { right: 0; }
     nav ul li a:hover { color: var(--dark); }
+
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all .3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px; flex-direction: column; gap: 20px; z-index: 99; }
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 24px; flex-direction: column; gap: 20px; z-index: 99;
+    }
     .mobile-menu.open { display: flex; }
     .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
-    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 64px; animation: fadeUp .8s .15s ease both; border-bottom: 1px solid var(--border); }
-    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s; }
+
+    /* ── HERO ── */
+    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 0; animation: fadeUp .8s .15s ease both; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s;
+    }
     .back-link:hover { color: var(--blue); }
     .back-link span { font-size: 16px; transition: transform .2s; }
     .back-link:hover span { transform: translateX(-4px); }
+
     .project-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
     .meta-tag { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); padding: 4px 10px; }
-    .project-title { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: clamp(32px, 5vw, 60px); line-height: 1.08; letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px; }
+
+    .project-title {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(32px, 5vw, 60px); line-height: 1.08;
+      letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px;
+    }
     .project-title em { font-style: italic; color: var(--blue); }
-    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; }
-    .next-project { display: block; padding: 64px 48px; background: var(--dark); color: #fff; text-decoration: none; transition: background .3s; }
-    .next-project:hover { background: #1a1a1a; }
-    .next-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
-    .next-title { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 4vw, 48px); line-height: 1.1; }
-    .next-arrow { font-size: 32px; margin-top: 20px; display: block; transition: transform .3s; }
+    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; margin-bottom: 48px; }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border); margin-bottom: 0;
+    }
+    .stat { padding: 28px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background .2s; cursor: default; }
+    .stat:hover { background: #fafafa; }
+    .stat:hover .stat-value { color: var(--blue); }
+    .stat-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .stat-value { font-size: 16px; font-weight: 600; color: var(--dark); transition: color .2s; }
+
+    /* ── COVER ── */
+    .project-cover {
+      width: 100%; aspect-ratio: 16/7;
+      background: linear-gradient(135deg, #f5f0ea 0%, #e8ddd0 50%, #d5c8b8 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; cursor: pointer;
+    }
+    .project-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .project-cover:hover img { transform: scale(1.03); }
+    .cover-placeholder { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: rgba(0,0,0,.15); }
+
+    /* ── CONTENT ── */
+    .project-content { padding: 80px 15%; }
+
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-heading {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(24px, 3vw, 36px); line-height: 1.2; margin-bottom: 20px; max-width: 680px;
+    }
+    .section-text { font-size: 16px; line-height: 1.8; color: var(--mid); margin-bottom: 16px; max-width: 680px; }
+    .content-divider { border: none; border-top: 1px solid var(--border); margin: 60px 0; }
+
+    /* Impact */
+    .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); margin: 32px 0; }
+    .impact-item { padding: 32px 24px; border-right: 1px solid var(--border); text-align: center; transition: background .25s ease; }
+    .impact-item:hover { background: #f6f6ff; }
+    .impact-item:last-child { border-right: none; }
+    .impact-num { font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--blue); display: block; margin-bottom: 8px; transition: transform .3s ease; }
+    .impact-item:hover .impact-num { transform: translateY(-3px); }
+    .impact-desc { font-size: 14px; color: var(--mid); line-height: 1.5; }
+
+    /* Why block */
+    .why-block { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .why-label { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--dark); margin-bottom: 10px; }
+
+    /* Stats hover */
+    .stat { transition: background .2s; cursor: default; }
+
+    /* Image block */
+    .img-block { width: 100%; display: flex; align-items: center; justify-content: center; margin: 32px 0; overflow: hidden; }
+    .img-block img { width: 100%; height: auto; display: block; object-fit: cover; transition: transform .5s ease; }
+    .img-block:hover img { transform: scale(1.02); }
+    .img-caption { font-size: 13px; color: var(--light); text-align: center; margin-top: -20px; margin-bottom: 32px; font-style: italic; }
+
+    /* Placeholder */
+    .img-ph {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #f5f0ea 0%, #e8ddd0 100%);
+      display: flex; align-items: center; justify-content: center; margin: 32px 0;
+    }
+    .img-ph span { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(0,0,0,.2); }
+    .img-ph-sm { aspect-ratio: 4/3; }
+
+    /* Insight cards */
+    .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .insight-card { border: 1px solid var(--border); padding: 24px; transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
+    .insight-card:hover { border-color: var(--blue); box-shadow: 0 8px 32px rgba(27,27,245,.07); transform: translateY(-3px); }
+    .insight-num { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .insight-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+    .insight-text { font-size: 14px; color: var(--mid); line-height: 1.65; font-style: italic; }
+
+    /* Pain points */
+    .pain-list { list-style: none; margin: 16px 0; display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+    .pain-item { padding: 16px 24px; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--mid); line-height: 1.6; display: flex; gap: 12px; align-items: flex-start; transition: background .2s; }
+    .pain-item:last-child { border-bottom: none; }
+    .pain-item:hover { background: #fafafa; }
+    .pain-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 9px; }
+
+    /* Why deserve grid */
+    .why-deserve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); margin-top: 32px; }
+    .why-deserve-item {
+      padding: 40px 32px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      text-align: center; transition: background .2s;
+    }
+    .why-deserve-item:nth-child(2n) { border-right: none; }
+    .why-deserve-item:nth-last-child(-n+2) { border-bottom: none; }
+    .why-deserve-item:hover { background: #fafafa; }
+    .why-deserve-icon { width: 100%; height: auto; object-fit: contain; display: block; margin-bottom: 24px; transition: transform .3s ease; }
+    .why-deserve-item:hover .why-deserve-icon { transform: translateY(-4px); }
+    .why-deserve-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
+    .why-deserve-text { font-size: 14px; color: var(--mid); line-height: 1.7; max-width: 320px; margin: 0 auto; }
+
+    /* HMW 2-col */
+    .hmw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
+    .hmw-icon { width: 100%; height: auto; object-fit: contain; display: block; margin-bottom: 24px; }
+    .hmw-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
+    .hmw-body { font-size: 15px; color: var(--mid); line-height: 1.75; margin-bottom: 20px; }
+    .hmw-block { border-left: 3px solid var(--border); padding-left: 16px; }
+    .hmw-label { font-size: 12px; font-style: italic; color: var(--light); margin-bottom: 6px; }
+    .hmw-q { font-size: 14px; font-weight: 700; font-style: italic; color: var(--dark); margin-bottom: 8px; line-height: 1.5; }
+    .hmw-a { font-size: 14px; font-style: italic; color: var(--mid); line-height: 1.65; }
+
+    /* Split layout (image + text side by side) */
+    .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-top: 32px; }
+    .split-layout .split-img { width: 100%; overflow: hidden; }
+    .split-layout .split-img img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .split-layout .split-img:hover img { transform: scale(1.02); }
+    .split-text-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--dark); margin-bottom: 8px; margin-top: 24px; }
+    .split-text-title:first-child { margin-top: 0; }
+    .split-text-body { font-size: 15px; color: var(--mid); line-height: 1.75; }
+    .mvp-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+    .mvp-item { padding: 20px; border: 1px solid var(--border); transition: background .2s; }
+    .mvp-item:hover { background: #fafafa; }
+    .mvp-item-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .mvp-item-text { font-size: 13px; color: var(--mid); line-height: 1.65; }
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    .step-item { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.6; }
+
+    /* Vision grid */
+    .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+    .vision-card { border: 1px solid var(--border); padding: 28px 24px; transition: border-color .25s, box-shadow .25s, transform .25s; }
+    .vision-card:hover { border-color: var(--blue); box-shadow: 0 8px 32px rgba(27,27,245,.07); transform: translateY(-3px); }
+    .vision-tag { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 10px; }
+    .vision-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; color: var(--dark); }
+    .vision-text { font-size: 14px; color: var(--mid); line-height: 1.65; }
+
+    /* Design steps */
+    .design-steps { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+    .design-step { border: 1px solid var(--border); border-bottom: none; overflow: hidden; transition: background .2s; }
+    .design-step:last-child { border-bottom: 1px solid var(--border); }
+    .design-step:hover { background: #fafafa; }
+    .step-header { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border); background: inherit; }
+    .step-tag { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); }
+    .step-name { font-size: 14px; font-weight: 600; color: var(--dark); }
+    .step-img { width: 100%; overflow: hidden; }
+    .step-img img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .design-step:hover .step-img img { transform: scale(1.02); }
+
+    /* Outcomes */
+    .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 24px 0; }
+    .outcome-item { padding: 28px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background .2s; overflow: hidden; }
+    .outcome-item:hover { background: #fafafa; }
+    .outcome-item:nth-child(3n) { border-right: none; }
+    .outcome-img { width: 100%; overflow: hidden; margin-bottom: 16px; }
+    .outcome-img img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .outcome-item:hover .outcome-img img { transform: scale(1.03); }
+    .outcome-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .outcome-text { font-size: 13px; color: var(--mid); line-height: 1.6; }
+
+    /* ── NEXT PROJECT ── */
+    .next-project {
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 48px; text-decoration: none; color: var(--dark); transition: background .2s;
+    }
+    .next-project:hover { background: #fafafa; }
+    .next-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; }
+    .next-arrow { font-size: 32px; color: var(--blue); transition: transform .3s; }
     .next-project:hover .next-arrow { transform: translateX(8px); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
     footer { padding: 24px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
     footer p { font-size: 13px; color: var(--light); }
     footer nav ul { list-style: none; display: flex; gap: 24px; }
     footer nav ul li a { text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; }
     footer nav ul li a:hover { color: var(--dark); }
     footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
-    @media (max-width: 900px) { nav { padding: 0 24px; } nav ul { display: none; } .hamburger { display: flex; } .project-hero { padding: calc(var(--nav-h) + 32px) 24px 48px; } .next-project { padding: 48px 24px; } footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; } }
-    @media (max-width: 600px) { :root { --nav-h: 60px; } nav { padding: 0 20px; } }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .project-hero { padding: calc(var(--nav-h) + 32px) 24px 0; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .project-content { padding: 48px 24px; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .impact-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .insight-grid { grid-template-columns: 1fr; }
+      .split-layout { grid-template-columns: 1fr; }
+      .why-deserve-grid { grid-template-columns: 1fr; }
+      .why-deserve-item { border-right: none; }
+      .why-deserve-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+      .why-deserve-item:last-child { border-bottom: none; }
+      .hmw-grid { grid-template-columns: 1fr; gap: 32px; }
+      .vision-grid { grid-template-columns: 1fr; }
+      .outcome-grid { grid-template-columns: 1fr 1fr; }
+      .next-project { padding: 32px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 60px; }
+      nav { padding: 0 20px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .outcome-grid { grid-template-columns: 1fr; }
+      .outcome-item { border-right: none; }
+    }
   </style>
 </head>
 <body>
+
 <nav id="navbar">
-  <a href="../index.html" class="logo-box"><img src="../ENTUNGLU_logo.png" alt="En Tung Lu" /></a>
+  <a href="../index.html" class="logo-box">
+    <img src="../ENTUNGLU_logo.png" alt="En Tung Lu" />
+  </a>
   <ul>
     <li><a href="../index.html" class="nav-link">Portfolio</a></li>
     <li><a href="../about.html" class="nav-link">About / Service</a></li>
     <li><a href="../contact.html" class="nav-link">Contact</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
 <div class="mobile-menu" id="mobileMenu">
   <a href="../index.html">Portfolio</a>
   <a href="../about.html">About / Service</a>
   <a href="../contact.html">Contact</a>
 </div>
+
 <main>
   <div class="project-hero">
     <a href="../index.html" class="back-link"><span>←</span> Back to Portfolio</a>
-    <div class="project-meta"><span class="meta-tag">Human Resource</span><span class="meta-tag">SaaS</span><span class="meta-tag">Enterprise</span></div>
-    <h1 class="project-title">Journey: The Exceptional <em>Onboarding</em> Product for HR Systems</h1>
-    <p class="project-subtitle">Case study content coming soon.</p>
+
+    <div class="project-meta">
+      <span class="meta-tag">Human Resource</span>
+      <span class="meta-tag">SaaS</span>
+    </div>
+
+    <h1 class="project-title">The <em>Exceptional</em> Onboarding<br>Product for HR Systems</h1>
+    <p class="project-subtitle">An internal HR SaaS solution that links the functions of various products according to the user journey, creating a better onboarding experience.</p>
+
+    <div class="stats-row">
+      <div class="stat"><div class="stat-label">Company</div><div class="stat-value">AMPOS</div></div>
+      <div class="stat"><div class="stat-label">Platform</div><div class="stat-value">Web, iOS, Android</div></div>
+      <div class="stat"><div class="stat-label">Date</div><div class="stat-value">2021</div></div>
+      <div class="stat"><div class="stat-label">Role</div><div class="stat-value">Product Designer</div></div>
+    </div>
   </div>
-  <a href="saas-hr.html" class="next-project">
-    <p class="next-label">Next Project</p>
-    <p class="next-title">SaaS Platform for Human Resource Management →</p>
+
+  <!-- Cover -->
+  <div class="project-cover">
+    <img src="../Portfolio/Ampos/Journey-mockup-01-s.webp" alt="Journey HR Onboarding" />
+  </div>
+
+  <div class="project-content">
+
+    <!-- Challenge -->
+    <div class="reveal">
+      <p class="section-label">The Challenge</p>
+      <h2 class="section-heading">Designing an onboarding process that truly integrates new employees</h2>
+      <p class="section-text">Designing an onboarding process that effectively integrates new employees into the company culture and provides them with the necessary tools and information.</p>
+      <p class="section-text">Selling new features to large enterprise clients with over 10,000 users is challenging because the cost of changing existing workflows is prohibitively high. For small and medium-sized enterprises, it is easy to compare each module with products on the market, which can lead to customer churn or fewer module purchases.</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Impact -->
+    <div class="reveal">
+      <p class="section-label">How Did I Have Impact?</p>
+      <div class="impact-grid">
+        <div class="impact-item">
+          <span class="impact-num">01</span>
+          <div class="impact-desc">For Product<br><span style="color:var(--light);font-size:13px;">Reduce churn rate & increase module purchase rate</span></div>
+        </div>
+        <div class="impact-item">
+          <span class="impact-num">02</span>
+          <div class="impact-desc">For Admin User<br><span style="color:var(--light);font-size:13px;">Linking module functions to create tailored workflows</span></div>
+        </div>
+        <div class="impact-item">
+          <span class="impact-num">03</span>
+          <div class="impact-desc">For End User<br><span style="color:var(--light);font-size:13px;">Creating smoother workflows to improve work performance</span></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Understanding the Problem -->
+    <div class="reveal">
+      <p class="section-label">Understanding the Problem</p>
+      <h2 class="section-heading">The Report from the CS Team</h2>
+      <ul class="pain-list">
+        <li class="pain-item"><span class="pain-dot"></span>Selling new features to large enterprise clients (10,000+ users) is challenging because the cost of changing existing workflows is prohibitively high.</li>
+        <li class="pain-item"><span class="pain-dot"></span>For small and medium-sized enterprises, easy module-by-module comparison with market products can lead to customer churn or fewer module purchases.</li>
+        <li class="pain-item"><span class="pain-dot"></span>Admin users frequently ask how to use each module effectively, requiring significant CS team manpower to address needs.</li>
+      </ul>
+
+      <div class="hmw-grid">
+        <div>
+          <img src="../Portfolio/Ampos/interview+01.webp" class="hmw-icon" alt="Initial Demand" />
+          <p class="hmw-title">Initial Demand</p>
+          <p class="hmw-body">Develop a new module enabling Admin users to connect functionalities of different modules, creating tailored workflows for departments and teams. This will enhance End Users' workflow experience, boosting purchase rates among large enterprises and reducing churn rates for small and medium-sized enterprises.</p>
+          <div class="hmw-block">
+            <p class="hmw-label">How Might We</p>
+            <p class="hmw-q">How do we meet the varied needs of customers for different workflows?</p>
+            <p class="hmw-a">By understanding the current workflows of both existing and potential customers, we can identify the most challenging aspects. This allows us to offer more effective solutions.</p>
+          </div>
+        </div>
+        <div>
+          <img src="../Portfolio/Ampos/interview+02.webp" class="hmw-icon" alt="Focus Group" />
+          <p class="hmw-title">Focus Group</p>
+          <p class="hmw-body">Through interviews with the CS team and customers, we learned about their needs and internal workflows, including onboarding, dispute resolution, departures, training, performance management, and talent pool management. New employee onboarding was highlighted as the most frequent and repetitive task.</p>
+          <div class="hmw-block">
+            <p class="hmw-label">How Might We</p>
+            <p class="hmw-q">How do we automate high-repetition, labor-intensive, and inefficient workflows for Admin Users?</p>
+            <p class="hmw-a">Based on the interview results, we will assess the value of automating the new employee onboarding process and break down its requirements to plan the MVP version.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Why Deserve to Do This -->
+    <div class="reveal">
+      <p class="section-label">Why Deserve to Do This?</p>
+      <div class="why-deserve-grid">
+        <div class="why-deserve-item">
+          <img src="../Portfolio/Ampos/01Product.webp" class="why-deserve-icon" alt="For Product" />
+          <p class="why-deserve-title">For Product</p>
+          <p class="why-deserve-text">By establishing relationships between modules and utilizing the functionalities of different modules to connect various workflows, we have the opportunity to reduce customer churn rate and increase module purchase rate.</p>
+        </div>
+        <div class="why-deserve-item">
+          <img src="../Portfolio/Ampos/02Team.webp" class="why-deserve-icon" alt="For Team" />
+          <p class="why-deserve-title">For Team</p>
+          <p class="why-deserve-text">Create an environment where customers can easily and flexibly use each module to build their own workflows. This can effectively reduce the manpower costs of the Customer Success team.</p>
+        </div>
+        <div class="why-deserve-item">
+          <img src="../Portfolio/Ampos/AMPOS_05-3.webp" class="why-deserve-icon" alt="For Admin User" />
+          <p class="why-deserve-title">For Admin User (HR, Manager)</p>
+          <p class="why-deserve-text">Linking the functionalities of each module to create workflows tailored for each department, team, etc.</p>
+        </div>
+        <div class="why-deserve-item">
+          <img src="../Portfolio/Ampos/04EndUSer.webp" class="why-deserve-icon" alt="For End User" />
+          <p class="why-deserve-title">For End User (Employee)</p>
+          <p class="why-deserve-text">Creating smoother workflows for end users to improve their work performance.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Defining the Problem -->
+    <div class="reveal">
+      <p class="section-label">Defining the Problem</p>
+      <h2 class="section-heading">Onboarding is the key to retaining and engaging talent</h2>
+      <div class="split-layout">
+        <div class="split-img">
+          <img src="../Portfolio/Ampos/pie+chart.webp" alt="SHRM onboarding research data" />
+          <p style="font-size:12px;color:var(--light);margin-top:10px;font-style:italic;">SHRM & BambooHR research on early employee attrition</p>
+        </div>
+        <div>
+          <p class="split-text-body" style="margin-bottom:20px;">According to the Society for Human Resource Management (SHRM), it takes a company 6 to 9 months of an employee's salary to find a suitable replacement. Training new employees should be a strategic process lasting at least a year to ensure high retention rates.</p>
+          <p class="split-text-body">BambooHR research found that among employees who left within six months: 23% said clear guidance about their responsibilities would have helped them stay, 21% wanted a more effective training method, and 17% needed a friendly, helpful colleague to feel supported.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Product Vision -->
+    <div class="reveal">
+      <p class="section-label">The Product Vision</p>
+      <h2 class="section-heading">An Exceptional Onboarding Journey with 4 key focus areas</h2>
+      <p class="section-text">As a product, we wanted to create an exceptional onboarding journey for new employees — connecting modules across the product with four core capabilities.</p>
+
+      <div class="img-block">
+        <img src="../Portfolio/Ampos/Journey+Flow.webp" alt="Journey product vision flow" />
+      </div>
+
+      <div class="vision-grid">
+        <div class="vision-card">
+          <p class="vision-tag">Admin</p>
+          <p class="vision-title">Journey Management</p>
+          <p class="vision-text">Admin Users design different journeys for different people, like a database of travel plans. They use different module features to create unique onboarding plans for each employee.</p>
+        </div>
+        <div class="vision-card">
+          <p class="vision-tag">Admin</p>
+          <p class="vision-title">Journey Application</p>
+          <p class="vision-text">Admin Users can assign any journey from the database to different employees and schedule the time needed. End Users get clear instructions on each task they need to complete.</p>
+        </div>
+        <div class="vision-card">
+          <p class="vision-tag">End User</p>
+          <p class="vision-title">Journey Path</p>
+          <p class="vision-text">End Users start their journeys here. They receive their specific journey and begin at the scheduled time — a guided, step-by-step onboarding experience.</p>
+        </div>
+        <div class="vision-card">
+          <p class="vision-tag">Admin</p>
+          <p class="vision-title">Journey Report</p>
+          <p class="vision-text">The monitoring center. Admin Users receive real-time reports on all journeys — completed, ongoing, and not yet started — and can track each employee's progress and effectiveness.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Defining the MVP -->
+    <div class="reveal">
+      <p class="section-label">Defining the MVP</p>
+      <h2 class="section-heading">Defining the MVP</h2>
+      <p class="section-text">During the 3-day intensive workshop, my team and I wireframed user processes and designed user stories to customize our strategic plan for launching the MVP. Here are the key features we collectively defined for the MVP:</p>
+
+      <div class="split-layout">
+        <div class="split-img">
+          <img src="../Portfolio/Ampos/Journey+wireframe.webp" alt="MVP workshop whiteboard" />
+        </div>
+        <div>
+          <ul class="mvp-list">
+            <li class="mvp-item">
+              <p class="mvp-item-title">Journey Management (Admin)</p>
+              <p class="mvp-item-text">Journey List / Create New Journey / Create Milestone Step (Online Learning Module) / View Detail<br><br>* Considering technical constraints and development time, linking functionalities across multiple modules isn't straightforward. We prioritized the value of connecting modules and will develop them in stages, continually integrating them into the Journey.</p>
+            </li>
+            <li class="mvp-item">
+              <p class="mvp-item-title">Journey Application (Admin)</p>
+              <p class="mvp-item-text">Auto Create Journey Application / View Detail</p>
+            </li>
+            <li class="mvp-item">
+              <p class="mvp-item-title">Journey Path (End User)</p>
+              <p class="mvp-item-text">Simple Journey Path</p>
+            </li>
+            <li class="mvp-item">
+              <p class="mvp-item-title">Journey Report (Admin)</p>
+              <p class="mvp-item-text">Due to technical and development time constraints, a comprehensive Report feature is not considered a priority. The Journey Report functionality will not be developed in the MVP version for now.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Designs -->
+    <div class="reveal">
+      <p class="section-label">Designs</p>
+
+      <div class="split-layout">
+        <div>
+          <p class="split-text-title">Wireframing</p>
+          <p class="split-text-body">For the wireframes based on the defined MVP features, it's crucial to consider not only the functionality of the MVP version but also whether user behavior aligns with the product and the flexibility in design for future possible developments. This will help collect feedback from developers and users effectively.</p>
+
+          <p class="split-text-title">Validating the Design</p>
+          <p class="split-text-body">User usability testing with key users using a prototype to verify if the design can solve their problems.</p>
+
+          <p class="split-text-title">Following the Design Guideline</p>
+          <p class="split-text-body">To ensure design style and user experience consistency, it is essential to follow the design style guide established by the AMPOS design team throughout the design process.</p>
+        </div>
+        <div class="split-img">
+          <img src="../Portfolio/Ampos/image-asset.webp" alt="Journey wireframe screens" />
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Working with Developers -->
+    <div class="reveal">
+      <p class="section-label">Working with Developers</p>
+
+      <div class="split-layout">
+        <div class="split-img">
+          <img src="../Portfolio/Ampos/design-spec.webp" alt="Design spec and flow" />
+        </div>
+        <div>
+          <p class="split-text-body">The Scrum Team consists of one Product Owner (PO), five engineers based in Bangkok, and myself. We are collaborating to develop the MVP version within one month. We set different development goals for each Sprint and create corresponding tickets to ensure rapid progress and real-time understanding of each other's progress. The development steps are as follows:</p>
+          <ul class="step-list">
+            <li class="step-item">STEP1: Confirm UX with wireframe and proceed to UI detailed design.</li>
+            <li class="step-item">STEP2: Write Design Spec to confirm all details.</li>
+            <li class="step-item">STEP3: Conduct a UI/UX Review to ensure consistency with the design before release.</li>
+            <li class="step-item">STEP4: Include any new UI components in the Design Guideline.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Outcomes -->
+    <div class="reveal">
+      <p class="section-label">Outcomes</p>
+      <h2 class="section-heading">Results and takeaways</h2>
+      <p class="section-text">Developing a new module is not easier than developing a new product. We need a clear understanding of the module's goals and its impact on the product. In the initial development phase, we prioritize fundamental issues over details to ensure resources are focused on the most valuable aspects.</p>
+      <div class="outcome-grid">
+        <div class="outcome-item">
+          <div class="outcome-img"><img src="../Portfolio/Ampos/01+impact.webp" alt="Customer retention" /></div>
+          <p class="outcome-title">85% Customer Retention</p>
+          <p class="outcome-text">Successfully retained 85% of customers who were about to churn.</p>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-img"><img src="../Portfolio/Ampos/02+impact.webp" alt="User engagement" /></div>
+          <p class="outcome-title">Extremely High User Engagement</p>
+          <p class="outcome-text">Significantly increased employee engagement through a well-designed onboarding experience.</p>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-img"><img src="../Portfolio/Ampos/03+impact.webp" alt="Module sales" /></div>
+          <p class="outcome-title">Increased Module Sales</p>
+          <p class="outcome-text">Successfully increased module sales across enterprise clients.</p>
+        </div>
+      </div>
+      <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);">
+        <a href="https://www.ampostech.com/" target="_blank" rel="noopener" style="font-size:13px;color:var(--blue);text-decoration:none;">https://www.ampostech.com/</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Next Project -->
+  <a href="blendvision.html" class="next-project reveal">
+    <div>
+      <div class="next-label">Next Project</div>
+      <div class="next-title">BlendVision — AI Solution for Digital Multimedia</div>
+    </div>
     <span class="next-arrow">→</span>
   </a>
 </main>
+
 <footer>
   <p>© 2026 En Tung Vicky Lu — Product Designer</p>
   <nav><ul>
@@ -94,13 +607,21 @@
     <li><a href="../contact.html">Contact</a></li>
   </ul></nav>
 </footer>
+
 <script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
-  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }));
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(r => ro.observe(r));
 </script>
 </body>
 </html>
