@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TelASA Streaming Platform — Vicky Lu</title>
+  <title>TELASA Android TV — Vicky Lu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -28,134 +28,241 @@
     }
     .logo-box { display: inline-flex; align-items: center; text-decoration: none; opacity: 1; transition: opacity .2s; }
     .logo-box:hover { opacity: 0.75; }
-    .logo-box { align-self: center; } .logo-box img { height: 36px; width: auto; display: block; }
+    .logo-box img { height: 36px; width: auto; display: block; }
+
     nav ul { list-style: none; display: flex; gap: 36px; }
     nav ul li a {
       text-decoration: none; font-size: 13px; font-weight: 500;
       letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
       transition: color .2s; position: relative; padding-bottom: 3px;
     }
-    nav ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 100%; height: 1.5px; background: var(--blue); transition: right .25s ease; }
+    nav ul li a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+      height: 1.5px; background: var(--blue); transition: right .25s ease;
+    }
     nav ul li a:hover::after { right: 0; }
     nav ul li a:hover { color: var(--dark); }
+
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all .3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px; flex-direction: column; gap: 20px; z-index: 99; }
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 24px; flex-direction: column; gap: 20px; z-index: 99;
+    }
     .mobile-menu.open { display: flex; }
     .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
 
     /* ── HERO ── */
-    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 0; animation: fadeUp .8s .15s ease both; }
+    .project-hero {
+      padding: calc(var(--nav-h) + 56px) 48px 0;
+      animation: fadeUp .8s .15s ease both;
+    }
     .back-link {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-      color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s;
+      color: var(--light); text-decoration: none; margin-bottom: 40px;
+      transition: color .2s;
     }
     .back-link:hover { color: var(--blue); }
     .back-link span { font-size: 16px; transition: transform .2s; }
     .back-link:hover span { transform: translateX(-4px); }
+
     .project-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-    .meta-tag { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); padding: 4px 10px; }
+    .meta-tag {
+      font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--blue); border: 1px solid var(--blue); padding: 4px 10px;
+    }
+
     .project-title {
       font-family: 'DM Serif Display', serif; font-weight: 400;
       font-size: clamp(32px, 5vw, 60px); line-height: 1.08;
       letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px;
     }
     .project-title em { font-style: italic; color: var(--blue); }
-    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; margin-bottom: 48px; }
 
-    /* ── STATS ── */
+    .project-subtitle {
+      font-size: 18px; color: var(--mid); line-height: 1.65;
+      max-width: 680px; margin-bottom: 48px;
+    }
+
+    /* ── STATS ROW ── */
     .stats-row {
       display: grid; grid-template-columns: repeat(4, 1fr);
       border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+      margin-bottom: 0;
     }
-    .stat { padding: 28px 32px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat { padding: 28px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .stat-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
-    .stat-val { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--dark); }
+    .stat-value { font-size: 16px; font-weight: 600; color: var(--dark); }
 
-    /* ── HERO IMAGE ── */
-    .hero-image {
-      margin-top: 48px;
-      width: 100%; aspect-ratio: 16/7; background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 60%, #2a1a4e 100%);
+    /* ── COVER IMAGE ── */
+    .project-cover {
+      width: 100%; aspect-ratio: 16/7;
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 60%, #2a1a4e 100%);
       display: flex; align-items: center; justify-content: center;
+      overflow: hidden; cursor: pointer;
     }
-    .hero-image-label { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.25); }
+    .project-cover img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .5s ease;
+    }
+    .project-cover:hover img { transform: scale(1.03); }
 
     /* ── CONTENT ── */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
+    .project-content { padding: 80px 15%; }
 
-    .content-section { padding: 80px 48px; border-bottom: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
-    .content-section.full-w { max-width: none; padding: 80px 48px; }
-    .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 12px;
+    }
     .section-heading {
       font-family: 'DM Serif Display', serif; font-weight: 400;
-      font-size: clamp(26px, 3.5vw, 40px); line-height: 1.2;
-      letter-spacing: -.02em; margin-bottom: 32px;
+      font-size: clamp(24px, 3vw, 36px); line-height: 1.2;
+      margin-bottom: 20px; max-width: 680px;
     }
-
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .body-text { font-size: 16px; color: var(--mid); line-height: 1.85; }
-    .body-text p + p { margin-top: 20px; }
-
-    .highlight-box {
-      padding: 32px; background: #fafafa; border-left: 3px solid var(--blue);
+    .section-text {
+      font-size: 16px; line-height: 1.8; color: var(--mid); margin-bottom: 16px;
+      max-width: 680px;
     }
-    .highlight-box p { font-size: 16px; color: var(--dark); line-height: 1.75; font-style: italic; }
+    .content-divider { border: none; border-top: 1px solid var(--border); margin: 60px 0; }
 
-    .img-placeholder {
-      width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 100%);
-      display: flex; align-items: center; justify-content: center; margin: 32px 0;
+    /* Impact numbers */
+    .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); margin: 32px 0; }
+    .impact-item {
+      padding: 32px 24px; border-right: 1px solid var(--border); text-align: center;
+      transition: background .25s ease;
     }
-    .img-placeholder span { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.2); }
+    .impact-item:hover { background: #f6f6ff; }
+    .impact-item:last-child { border-right: none; }
+    .impact-num {
+      font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--blue);
+      display: block; margin-bottom: 8px; transition: transform .3s ease;
+    }
+    .impact-item:hover .impact-num { transform: translateY(-3px); }
+    .impact-desc { font-size: 14px; color: var(--mid); line-height: 1.5; }
 
-    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); }
-    .insight-card { padding: 32px 28px; border-right: 1px solid var(--border); }
-    .insight-card:last-child { border-right: none; }
-    .insight-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
-    .insight-card p { font-size: 14px; color: var(--mid); line-height: 1.7; }
-    .insight-num { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--blue); display: block; margin-bottom: 8px; }
+    /* Why inline */
+    .why-block { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .why-label { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--dark); margin-bottom: 10px; }
+
+    /* Stats hover */
+    .stat { transition: background .2s; cursor: default; }
+    .stat:hover { background: #fafafa; }
+    .stat:hover .stat-value { color: var(--blue); }
+    .stat-value { transition: color .2s; }
+
+    /* Image block */
+    .img-block {
+      width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 32px 0; overflow: hidden;
+    }
+    .img-block img { width: 100%; height: auto; display: block; object-fit: cover; transition: transform .5s ease; }
+    .img-block:hover img { transform: scale(1.02); }
+    .img-caption { font-size: 13px; color: var(--light); text-align: center; margin-top: -20px; margin-bottom: 32px; font-style: italic; }
+
+    /* Insight cards */
+    .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .insight-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+    .insight-card {
+      border: 1px solid var(--border); padding: 24px;
+      transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+    }
+    .insight-card:hover {
+      border-color: var(--blue); box-shadow: 0 8px 32px rgba(27,27,245,.07);
+      transform: translateY(-3px);
+    }
+    .insight-num { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .insight-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+    .insight-text { font-size: 14px; color: var(--mid); line-height: 1.65; font-style: italic; }
+
+    /* Design steps */
+    .design-steps { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+    .design-step { border: 1px solid var(--border); border-bottom: none; overflow: hidden; transition: background .2s; }
+    .design-step:last-child { border-bottom: 1px solid var(--border); }
+    .design-step:hover { background: #fafafa; }
+    .step-header { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border); background: inherit; }
+    .step-tag { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); }
+    .step-name { font-size: 14px; font-weight: 600; color: var(--dark); }
+    .step-img { width: 100%; overflow: hidden; }
+    .step-img img, .step-img video { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .design-step:hover .step-img img, .design-step:hover .step-img video { transform: scale(1.02); }
+
+    /* Prototyping side-by-side */
+    .proto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 32px; }
+    .proto-grid .design-step { border-bottom: 1px solid var(--border); }
+    .proto-grid .design-step:first-child { border-right: 1px solid var(--border); }
+
+    /* Outcomes */
+    .outcome-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 24px 0; }
+    .outcome-item {
+      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      transition: background .2s; overflow: hidden;
+    }
+    .outcome-item:hover { background: #fafafa; }
+    .outcome-item:nth-child(3n) { border-right: none; }
+    .outcome-img { padding: 20px 20px 0; overflow: hidden; }
+    .outcome-img img { width: 100%; height: auto; display: block; border-radius: 4px; transition: transform .5s ease; }
+    .outcome-item:hover .outcome-img img { transform: scale(1.03); }
+    .outcome-body { padding: 16px 24px 28px; }
+    .outcome-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .outcome-text { font-size: 13px; color: var(--mid); line-height: 1.6; }
 
     /* ── NEXT PROJECT ── */
     .next-project {
-      display: block; padding: 64px 48px; background: var(--dark); color: #fff;
-      text-decoration: none; transition: background .3s;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 48px; text-decoration: none; color: var(--dark);
+      transition: background .2s;
     }
-    .next-project:hover { background: #1a1a1a; }
-    .next-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
-    .next-title { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 4vw, 48px); line-height: 1.1; }
-    .next-arrow { font-size: 32px; margin-top: 20px; display: block; transition: transform .3s; }
+    .next-project:hover { background: #fafafa; }
+    .next-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; }
+    .next-arrow { font-size: 32px; color: var(--blue); transition: transform .3s; }
     .next-project:hover .next-arrow { transform: translateX(8px); }
 
-    footer { padding: 24px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    footer {
+      padding: 24px 48px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
     footer p { font-size: 13px; color: var(--light); }
     footer nav ul { list-style: none; display: flex; gap: 24px; }
     footer nav ul li a { text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; }
     footer nav ul li a:hover { color: var(--dark); }
+    footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
 
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
       nav ul { display: none; }
       .hamburger { display: flex; }
       .project-hero { padding: calc(var(--nav-h) + 32px) 24px 0; }
-      .content-section, .content-section.full-w { padding: 56px 24px; }
       .stats-row { grid-template-columns: 1fr 1fr; }
-      .two-col { grid-template-columns: 1fr; gap: 36px; }
-      .three-col { grid-template-columns: 1fr; }
-      .insight-card { border-right: none; border-bottom: 1px solid var(--border); }
-      .insight-card:last-child { border-bottom: none; }
-      .next-project { padding: 48px 24px; }
+      .project-content { padding: 48px 24px; }
+      .impact-grid { grid-template-columns: 1fr; }
+      .impact-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .insight-grid { grid-template-columns: 1fr; }
+      .insight-grid-3 { grid-template-columns: 1fr; }
+      .proto-grid { grid-template-columns: 1fr; }
+      .proto-grid .design-step:first-child { border-right: none; }
+      .outcome-grid { grid-template-columns: 1fr 1fr; }
+      .next-project { padding: 32px 24px; }
       footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
     }
     @media (max-width: 600px) {
       :root { --nav-h: 60px; }
       nav { padding: 0 20px; }
-      .stats-row { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .outcome-grid { grid-template-columns: 1fr; }
+      .outcome-item { border-right: none; }
     }
-      footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
   </style>
 </head>
 <body>
@@ -183,128 +290,196 @@
 <main>
   <div class="project-hero">
     <a href="../index.html" class="back-link"><span>←</span> Back to Portfolio</a>
+
     <div class="project-meta">
       <span class="meta-tag">Streaming</span>
-      <span class="meta-tag">Smart TV</span>
-      <span class="meta-tag">Mobile</span>
+      <span class="meta-tag">Android TV</span>
     </div>
-    <h1 class="project-title">TelASA — <em>Streaming Platform</em><br>for Multi-Screen Audiences</h1>
-    <p class="project-subtitle">Designing a cohesive, multi-platform video streaming experience — from Smart TV to mobile — with a focus on content discovery and lean-back viewing.</p>
+
+    <h1 class="project-title">Revolutionizing <em>Entertainment</em></h1>
+    <p class="project-subtitle">Elevating the Streaming Experience with TELASA's Android TV Redesign</p>
 
     <div class="stats-row">
-      <div class="stat">
-        <p class="stat-label">Platform</p>
-        <p class="stat-val">Smart TV · iOS · Android</p>
-      </div>
-      <div class="stat">
-        <p class="stat-label">My Role</p>
-        <p class="stat-val">Lead Product Designer</p>
-      </div>
-      <div class="stat">
-        <p class="stat-label">Scope</p>
-        <p class="stat-val">End-to-End Design</p>
-      </div>
-      <div class="stat">
-        <p class="stat-label">Focus</p>
-        <p class="stat-val">UX · UI · Design System</p>
-      </div>
-    </div>
-
-    <div class="hero-image">
-      <span class="hero-image-label">Project Cover Image</span>
+      <div class="stat"><div class="stat-label">Company</div><div class="stat-value">TELASA</div></div>
+      <div class="stat"><div class="stat-label">Platform</div><div class="stat-value">Android TV</div></div>
+      <div class="stat"><div class="stat-label">Date</div><div class="stat-value">2023</div></div>
+      <div class="stat"><div class="stat-label">Role</div><div class="stat-value">Product Designer</div></div>
     </div>
   </div>
 
-  <!-- OVERVIEW -->
-  <div class="content-section reveal">
-    <div class="two-col">
-      <div>
-        <p class="section-eyebrow">01 — Overview</p>
-        <h2 class="section-heading">A streaming platform built for every screen</h2>
-        <div class="body-text">
-          <p>TelASA is a video streaming service targeting audiences across Smart TV, iOS, and Android. The challenge was to create a consistent yet platform-optimized experience — where the lean-back, remote-driven Smart TV experience and the swipe-forward mobile experience both feel native and intuitive.</p>
-          <p>I led the end-to-end design across all three platforms, from initial research and content architecture to full UI design, design system, and developer handoff.</p>
+  <!-- Cover Image -->
+  <div class="project-cover">
+    <img src="../Portfolio/Telasa/TELASA_home.webp" alt="TELASA Android TV" />
+  </div>
+
+  <div class="project-content">
+
+    <!-- Challenge -->
+    <div class="reveal">
+      <p class="section-label">The Challenge</p>
+      <h2 class="section-heading">Re-designing the streaming experience for Android TV</h2>
+      <p class="section-text">TELASA, a leading streaming enterprise, has established a significant presence in the digital entertainment industry with over 1 million users. Focused on delivering high-quality video content, TELASA has developed a comprehensive suite of applications tailored for various platforms, including Android TV, iOS, Android, and web browsers.</p>
+      <p class="section-text">Re-design the streaming experience for TELASA's Android TV, with a focus on ensuring a consistent experience across all platforms (Web, iOS, Android), involves several key considerations.</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Impact -->
+    <div class="reveal">
+      <p class="section-label">How Did I Have Impact?</p>
+      <div class="impact-grid">
+        <div class="impact-item">
+          <span class="impact-num">01</span>
+          <div class="impact-desc">Consideration of All Platforms' Behavior to Maintain Design Consistency</div>
+        </div>
+        <div class="impact-item">
+          <span class="impact-num">02</span>
+          <div class="impact-desc">Comprehensive and Clear Design Proposals Aligned with Customer Needs</div>
+        </div>
+        <div class="impact-item">
+          <span class="impact-num">03</span>
+          <div class="impact-desc">Contribution to TELASA's Brand Development</div>
         </div>
       </div>
-      <div>
-        <div class="highlight-box">
-          <p>"The core challenge: how do you make content discovery feel effortless on a 65-inch TV controlled by a remote, and equally natural on a 6-inch phone with a thumb?"</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Reviewing Previous Design + User Needs -->
+    <div class="reveal">
+      <p class="section-label">Reviewing the Previous Design</p>
+      <div class="img-block">
+        <img src="../Portfolio/Telasa/TELASA_review.webp" alt="TELASA previous design review" />
+      </div>
+      <div class="insight-grid-3">
+        <div class="insight-card">
+          <div class="insight-num">User Need</div>
+          <div class="insight-title">Enhanced Entertainment Experience</div>
+          <p class="insight-text">By analyzing competitors and reviewing TELASA's previous product, we identified differences and prioritized redesign efforts to improve the entertainment experience through phased enhancements.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-num">User + Business Need</div>
+          <div class="insight-title">Outdated Visual Design</div>
+          <p class="insight-text">The visual design appeared outdated and not in line with Android TV guidelines. With TELASA's brand update in 2022 and 2023, a design refresh was necessary to reflect the new look and feel.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-num">Business Need</div>
+          <div class="insight-title">Diverse Payment Options for Android TV Users</div>
+          <p class="insight-text">TELASA introduced a new payment method, TELASA ID, to offer more payment options, aiming to increase user retention and subscription rates. Previously, direct subscriptions were not possible through Android TV, necessitating the inclusion of TELASA ID across all platforms.</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- CHALLENGE -->
-  <div class="content-section reveal">
-    <p class="section-eyebrow">02 — The Challenge</p>
-    <h2 class="section-heading">Multi-platform design without fragmentation</h2>
-    <div class="three-col">
-      <div class="insight-card">
-        <span class="insight-num">01</span>
-        <h4>Platform Parity</h4>
-        <p>Users expect a consistent brand and content library across all devices — but interaction patterns differ fundamentally between TV remote navigation and touch gestures.</p>
-      </div>
-      <div class="insight-card">
-        <span class="insight-num">02</span>
-        <h4>Content Discovery</h4>
-        <p>With a large content catalogue, helping users find what to watch next — without overwhelming them — was the primary UX problem to solve.</p>
-      </div>
-      <div class="insight-card">
-        <span class="insight-num">03</span>
-        <h4>Lean-Back vs. Active</h4>
-        <p>Smart TV is a passive, social viewing context. Mobile is personal, on-the-go. The UI needed to serve both modes without compromise.</p>
+    <hr class="content-divider" />
+
+    <!-- Designing -->
+    <div class="reveal">
+      <p class="section-label">Designing</p>
+      <h2 class="section-heading">A fresh visual experience for the big screen</h2>
+      <p class="section-text">Our latest TELASA Android TV app revamp offers a fresh visual experience, featuring an elegant full-screen design and a simplified menu structure for increased ease of use and interaction. With this update, we aim to provide a new world of digital entertainment that perfectly balances convenience with sophisticated aesthetics.</p>
+      <div class="design-steps">
+        <div class="design-step">
+          <div class="step-img"><img src="../Portfolio/Telasa/Design_01.webp" alt="TELASA Android TV redesign" /></div>
+        </div>
+        <div class="design-step">
+          <div class="step-img"><img src="../Portfolio/Telasa/Design_02.webp" alt="TELASA Android TV redesign" /></div>
+        </div>
+        <div class="design-step">
+          <div class="step-img"><img src="../Portfolio/Telasa/Design_03.webp" alt="TELASA Android TV redesign" /></div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- PROCESS -->
-  <div class="content-section reveal">
-    <p class="section-eyebrow">03 — Design Process</p>
-    <h2 class="section-heading">Research → Architecture → Design → Test</h2>
-    <div class="body-text">
-      <p>Starting with competitive analysis of major streaming platforms (Netflix, Disney+, HBO Max) and user interviews with target audiences, I mapped content consumption patterns and pain points. Key insights shaped the information architecture: surface trending content early, reduce navigation depth, and make resume-watching frictionless.</p>
-    </div>
-    <div class="img-placeholder"><span>Process / Wireframe Screenshots</span></div>
-    <div class="two-col">
-      <div class="body-text">
-        <p>For Smart TV, I designed a D-pad–first navigation system with large focus states, high-contrast visuals optimized for viewing distance, and a simplified menu structure. Content rows with hero highlights and category rails emerged as the dominant pattern.</p>
-      </div>
-      <div class="body-text">
-        <p>Mobile used a bottom-navigation architecture with swipe-forward browsing, portrait-optimized card layouts, and a persistent mini-player for background listening. Shared design tokens kept both platforms visually consistent.</p>
-      </div>
-    </div>
-  </div>
+    <hr class="content-divider" />
 
-  <!-- OUTCOME -->
-  <div class="content-section reveal">
-    <p class="section-eyebrow">04 — Outcome</p>
-    <h2 class="section-heading">A unified experience across every screen</h2>
-    <div class="three-col">
-      <div class="insight-card">
-        <h4>Design System</h4>
-        <p>Built a shared component library covering both TV and mobile — enabling consistent visual language while accommodating platform-specific interaction patterns.</p>
-      </div>
-      <div class="insight-card">
-        <h4>Content Architecture</h4>
-        <p>Restructured the homepage and browse experience to reduce time-to-content, with personalized rows and contextual recommendations.</p>
-      </div>
-      <div class="insight-card">
-        <h4>Developer Handoff</h4>
-        <p>Delivered annotated Figma specs with interaction states, focus behaviors, and responsive rules for all three platforms.</p>
+    <!-- Prototyping -->
+    <div class="reveal">
+      <p class="section-label">Prototyping Interactions</p>
+      <p class="section-text">When confirming designs with clients, I communicate through prototyping to verify user flow and interaction details. These prototypes are also used to communicate with the development team, enabling the entire team to quickly understand design details and improve communication efficiency.</p>
+      <div class="proto-grid">
+        <div class="design-step">
+          <div class="step-header">
+            <span class="step-name">Top Page</span>
+          </div>
+          <div class="step-img">
+            <video autoplay loop muted playsinline>
+              <source src="../Portfolio/Telasa/Prototype01.mov" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+        <div class="design-step">
+          <div class="step-header">
+            <span class="step-name">Title Page</span>
+          </div>
+          <div class="step-img">
+            <video autoplay loop muted playsinline>
+              <source src="../Portfolio/Telasa/Prototype02.mov" type="video/mp4" />
+            </video>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="img-placeholder" style="aspect-ratio:16/8"><span>Final UI Screenshots</span></div>
+
+    <hr class="content-divider" />
+
+    <!-- Cross-Platform -->
+    <div class="reveal">
+      <p class="section-label">Cross-Platform Experience</p>
+      <div class="img-block">
+        <img src="../Portfolio/Telasa/TELASA_device.webp" alt="TELASA cross-platform" />
+      </div>
+      <p class="section-text">As the lead designer for the TELASA project, my responsibilities extended beyond just the Android TV interface to encompass Web, iOS, Android, and CMS designs. The challenge lay in crafting a unified user experience across diverse device use cases and technical specifications, while maintaining a consistent design style and behavior. This vast scope was a significant challenge within the TELASA project, but it was an experience I truly valued and found rewarding. This role demanded a deep understanding of user interaction across platforms and a strategic approach to design coherence.</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Outcomes -->
+    <div class="reveal">
+      <p class="section-label">Outcomes</p>
+      <h2 class="section-heading">Results that made a difference</h2>
+      <div class="outcome-grid">
+        <div class="outcome-item">
+          <div class="outcome-img"><img src="../Portfolio/Telasa/outcome_01.webp" alt="Enhanced User Experience" /></div>
+          <div class="outcome-body">
+            <p class="outcome-title">Enhanced User Experience</p>
+            <p class="outcome-text">The new version offers users an improved entertainment experience</p>
+          </div>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-img"><img src="../Portfolio/Telasa/outcome_02.webp" alt="Brand Refresh" /></div>
+          <div class="outcome-body">
+            <p class="outcome-title">Brand Refresh</p>
+            <p class="outcome-text">The visual design has been updated and modernized to align with the new TELASA brand</p>
+          </div>
+        </div>
+        <div class="outcome-item">
+          <div class="outcome-img"><img src="../Portfolio/Telasa/outcome_03.webp" alt="Advanced Technology Integration" /></div>
+          <div class="outcome-body">
+            <p class="outcome-title">Advanced Technology Integration</p>
+            <p class="outcome-text">The redesigned interface facilitates the integration of the latest Android TV technology and user interface</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:20px;">
+        <span style="font-family:'DM Serif Display',serif;font-size:18px;letter-spacing:.04em;">TELASA</span>
+        <a href="https://navi.telasa.jp/" target="_blank" rel="noopener" style="font-size:13px;color:var(--blue);text-decoration:none;">https://navi.telasa.jp/</a>
+      </div>
+    </div>
+
   </div>
 
-  <a href="leadership.html" class="next-project reveal">
-    <p class="next-label">Next Project</p>
-    <p class="next-title">Leadership Development Platform →</p>
+  <!-- Next Project -->
+  <a href="journey.html" class="next-project reveal">
+    <div>
+      <div class="next-label">Next Project</div>
+      <div class="next-title">Journey — Exceptional Onboarding for HR</div>
+    </div>
     <span class="next-arrow">→</span>
   </a>
 </main>
 
 <footer>
-  <p>© 2025 En Tung Vicky Lu — Product Designer</p>
+  <p>© 2026 En Tung Vicky Lu — Product Designer</p>
   <nav><ul>
     <li><a href="../index.html">Portfolio</a></li>
     <li><a href="../about.html">About</a></li>
@@ -313,22 +488,18 @@
 </footer>
 
 <script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
-
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
     mobileMenu.classList.toggle('open');
   });
-  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
-    hamburger.classList.remove('open'); mobileMenu.classList.remove('open');
-  }));
 
   const ro = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
-  }, { threshold: 0.08 });
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(r => ro.observe(r));
 </script>
 </body>
