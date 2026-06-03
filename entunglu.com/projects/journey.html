@@ -194,8 +194,14 @@
     .mvp-item:hover { background: #fafafa; }
     .mvp-item-title { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
     .mvp-item-text { font-size: 13px; color: var(--mid); line-height: 1.65; }
-    .step-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-    .step-item { font-size: 15px; font-weight: 700; color: var(--dark); line-height: 1.6; }
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: 0; margin-top: 24px; border: 1px solid var(--border); }
+    .step-item { display: flex; gap: 20px; align-items: flex-start; padding: 20px 24px; border-bottom: 1px solid var(--border); transition: background .2s; }
+    .step-item:last-child { border-bottom: none; }
+    .step-item:hover { background: #fafafa; }
+    .step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; letter-spacing: .04em; margin-top: 1px; }
+    .step-content { display: flex; flex-direction: column; gap: 4px; }
+    .step-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--light); }
+    .step-desc { font-size: 14px; color: var(--mid); line-height: 1.65; }
 
     /* Vision grid */
     .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
@@ -236,7 +242,8 @@
     }
     .next-project:hover { background: #fafafa; }
     .next-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
-    .next-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; margin-bottom: 8px; }
+    .next-desc { font-size: 14px; color: var(--light); line-height: 1.6; max-width: 480px; }
     .next-arrow { font-size: 32px; color: var(--blue); transition: transform .3s; }
     .next-project:hover .next-arrow { transform: translateX(8px); }
 
@@ -549,10 +556,34 @@
         <div>
           <p class="split-text-body">The Scrum Team consists of one Product Owner (PO), five engineers based in Bangkok, and myself. We are collaborating to develop the MVP version within one month. We set different development goals for each Sprint and create corresponding tickets to ensure rapid progress and real-time understanding of each other's progress. The development steps are as follows:</p>
           <ul class="step-list">
-            <li class="step-item">STEP1: Confirm UX with wireframe and proceed to UI detailed design.</li>
-            <li class="step-item">STEP2: Write Design Spec to confirm all details.</li>
-            <li class="step-item">STEP3: Conduct a UI/UX Review to ensure consistency with the design before release.</li>
-            <li class="step-item">STEP4: Include any new UI components in the Design Guideline.</li>
+            <li class="step-item">
+              <span class="step-num">01</span>
+              <div class="step-content">
+                <span class="step-label">Confirm UX</span>
+                <span class="step-desc">Validate UX with wireframe and proceed to UI detailed design.</span>
+              </div>
+            </li>
+            <li class="step-item">
+              <span class="step-num">02</span>
+              <div class="step-content">
+                <span class="step-label">Write Design Spec</span>
+                <span class="step-desc">Document all design details and specifications to align the team.</span>
+              </div>
+            </li>
+            <li class="step-item">
+              <span class="step-num">03</span>
+              <div class="step-content">
+                <span class="step-label">UI/UX Review</span>
+                <span class="step-desc">Conduct a review to ensure consistency with the design before release.</span>
+              </div>
+            </li>
+            <li class="step-item">
+              <span class="step-num">04</span>
+              <div class="step-content">
+                <span class="step-label">Update Design Guideline</span>
+                <span class="step-desc">Include any new UI components in the Design Guideline for future reference.</span>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -582,18 +613,20 @@
           <p class="outcome-text">Successfully increased module sales across enterprise clients.</p>
         </div>
       </div>
-      <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);">
-        <a href="https://www.ampostech.com/" target="_blank" rel="noopener" style="font-size:13px;color:var(--blue);text-decoration:none;">https://www.ampostech.com/</a>
+      <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:20px;">
+        <span style="font-family:'DM Serif Display',serif;font-size:18px;letter-spacing:.04em;">AMPOS</span>
+        <a href="https://www.ampostech.com/" target="_blank" rel="noopener" style="font-size:13px;color:var(--blue);text-decoration:none;">https://www.ampostech.com</a>
       </div>
     </div>
 
   </div>
 
   <!-- Next Project -->
-  <a href="blendvision.html" class="next-project reveal">
+  <a href="saas-hr.html" class="next-project reveal">
     <div>
       <div class="next-label">Next Project</div>
-      <div class="next-title">BlendVision — AI Solution for Digital Multimedia</div>
+      <div class="next-title">SaaS Platform for Human Resource Management</div>
+      <p class="next-desc">Human Resource — A modular SaaS platform helping people do better through systematized HR solutions.</p>
     </div>
     <span class="next-arrow">→</span>
   </a>

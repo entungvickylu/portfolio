@@ -9,98 +9,415 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --blue: #1B1BF5; --dark: #111111; --mid: #555555; --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px; }
+    :root {
+      --blue: #1B1BF5; --dark: #111111; --mid: #555555;
+      --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px;
+    }
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+
     @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; animation: slideDown .6s ease both; }
-    nav.scrolled { border-color: var(--border); }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+      z-index: 100; animation: slideDown .6s ease both;
+    }
     .logo-box { display: inline-flex; align-items: center; text-decoration: none; opacity: 1; transition: opacity .2s; }
     .logo-box:hover { opacity: 0.75; }
     .logo-box img { height: 36px; width: auto; display: block; }
+
     nav ul { list-style: none; display: flex; gap: 36px; }
-    nav ul li a { text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; position: relative; padding-bottom: 3px; }
-    nav ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 100%; height: 1.5px; background: var(--blue); transition: right .25s ease; }
+    nav ul li a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
+      transition: color .2s; position: relative; padding-bottom: 3px;
+    }
+    nav ul li a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+      height: 1.5px; background: var(--blue); transition: right .25s ease;
+    }
     nav ul li a:hover::after { right: 0; }
     nav ul li a:hover { color: var(--dark); }
+
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--dark); transition: all .3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px; flex-direction: column; gap: 20px; z-index: 99; }
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 24px; flex-direction: column; gap: 20px; z-index: 99;
+    }
     .mobile-menu.open { display: flex; }
     .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
-    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 64px; animation: fadeUp .8s .15s ease both; border-bottom: 1px solid var(--border); }
-    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s; }
+
+    /* ── HERO ── */
+    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 0; animation: fadeUp .8s .15s ease both; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s;
+    }
     .back-link:hover { color: var(--blue); }
     .back-link span { font-size: 16px; transition: transform .2s; }
     .back-link:hover span { transform: translateX(-4px); }
+
     .project-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
     .meta-tag { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); padding: 4px 10px; }
-    .project-title { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: clamp(32px, 5vw, 60px); line-height: 1.08; letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px; }
+
+    .project-title {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(32px, 5vw, 60px); line-height: 1.08;
+      letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px;
+    }
     .project-title em { font-style: italic; color: var(--blue); }
-    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; }
-    .next-project { display: block; padding: 64px 48px; background: var(--dark); color: #fff; text-decoration: none; transition: background .3s; }
-    .next-project:hover { background: #1a1a1a; }
-    .next-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
-    .next-title { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 4vw, 48px); line-height: 1.1; }
-    .next-arrow { font-size: 32px; margin-top: 20px; display: block; transition: transform .3s; }
+    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; margin-bottom: 48px; }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border); margin-bottom: 0;
+    }
+    .stat { padding: 28px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background .2s; cursor: default; }
+    .stat:hover { background: #fafafa; }
+    .stat:hover .stat-value { color: var(--blue); }
+    .stat-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .stat-value { font-size: 16px; font-weight: 600; color: var(--dark); transition: color .2s; }
+
+    /* ── COVER ── */
+    .project-cover {
+      width: 100%; aspect-ratio: 16/7;
+      background: linear-gradient(135deg, #e8eaff 0%, #c5caff 100%);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; cursor: pointer;
+    }
+    .project-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .project-cover:hover img { transform: scale(1.03); }
+
+    /* ── CONTENT ── */
+    .project-content { padding: 80px 15%; }
+
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-heading {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(24px, 3vw, 36px); line-height: 1.2; margin-bottom: 20px; max-width: 680px;
+    }
+    .section-text { font-size: 16px; line-height: 1.8; color: var(--mid); margin-bottom: 16px; max-width: 680px; }
+    .content-divider { border: none; border-top: 1px solid var(--border); margin: 60px 0; }
+
+    /* Contribution grid */
+    .contrib-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--border); margin-top: 32px; }
+    .contrib-item { padding: 24px 28px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background .2s; }
+    .contrib-item:nth-child(3n) { border-right: none; }
+    .contrib-item:nth-last-child(-n+3) { border-bottom: none; }
+    .contrib-item:hover { background: #f6f6ff; }
+    .contrib-num { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .contrib-title { font-size: 15px; font-weight: 600; color: var(--dark); }
+
+    /* Full-width image block */
+    .img-block { width: 100%; overflow: hidden; margin: 32px 0; }
+    .img-block img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .img-block:hover img { transform: scale(1.02); }
+
+    /* Module showcase grid */
+    .module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); margin-top: 32px; }
+    .module-item { overflow: hidden; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background .2s; }
+    .module-item:nth-child(2n) { border-right: none; }
+    .module-item:nth-last-child(-n+2) { border-bottom: none; }
+    .module-item:hover { background: #fafafa; }
+    .module-img { width: 100%; overflow: hidden; }
+    .module-img img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .module-item:hover .module-img img { transform: scale(1.02); }
+    .module-body { padding: 24px 28px 32px; }
+    .module-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .module-text { font-size: 14px; color: var(--mid); line-height: 1.7; }
+
+    /* Journey spotlight (split, no border) */
+    .spotlight { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 32px; align-items: center; }
+    .spotlight-img { overflow: hidden; }
+    .spotlight-img img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .spotlight-img:hover img { transform: scale(1.02); }
+    .spotlight-body { display: flex; flex-direction: column; justify-content: center; }
+    .spotlight-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
+    .spotlight-title { font-family: 'DM Serif Display', serif; font-size: clamp(22px, 2.5vw, 30px); line-height: 1.25; margin-bottom: 16px; }
+    .spotlight-text { font-size: 15px; color: var(--mid); line-height: 1.75; margin-bottom: 32px; }
+    .spotlight-link {
+      display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
+      font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      color: #fff; background: var(--blue); text-decoration: none;
+      padding: 14px 24px; transition: background .2s, gap .2s;
+    }
+    .spotlight-link:hover { background: #0000d4; gap: 14px; }
+
+    /* External link */
+    .ext-link-row { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 16px; }
+    .ext-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--blue); text-decoration: none; transition: gap .2s;
+    }
+    .ext-link:hover { gap: 12px; }
+
+    /* ── NEXT PROJECT ── */
+    .next-project {
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 48px; text-decoration: none; color: var(--dark); transition: background .2s;
+    }
+    .next-project:hover { background: #fafafa; }
+    .next-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; margin-bottom: 8px; }
+    .next-desc { font-size: 14px; color: var(--light); line-height: 1.6; max-width: 480px; }
+    .next-arrow { font-size: 32px; color: var(--blue); transition: transform .3s; }
     .next-project:hover .next-arrow { transform: translateX(8px); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
     footer { padding: 24px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
     footer p { font-size: 13px; color: var(--light); }
     footer nav ul { list-style: none; display: flex; gap: 24px; }
     footer nav ul li a { text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; }
     footer nav ul li a:hover { color: var(--dark); }
     footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
-    @media (max-width: 900px) { nav { padding: 0 24px; } nav ul { display: none; } .hamburger { display: flex; } .project-hero { padding: calc(var(--nav-h) + 32px) 24px 48px; } .next-project { padding: 48px 24px; } footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; } }
-    @media (max-width: 600px) { :root { --nav-h: 60px; } nav { padding: 0 20px; } }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .project-hero { padding: calc(var(--nav-h) + 32px) 24px 0; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .project-content { padding: 48px 24px; }
+      .contrib-grid { grid-template-columns: 1fr 1fr; }
+      .contrib-item:nth-child(3n) { border-right: 1px solid var(--border); }
+      .contrib-item:nth-child(2n) { border-right: none; }
+      .contrib-item:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .contrib-item:nth-last-child(-n+2) { border-bottom: none; }
+      .module-grid { grid-template-columns: 1fr; }
+      .module-item:nth-child(2n) { border-right: none; }
+      .module-item { border-right: none; }
+      .module-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+      .module-item:last-child { border-bottom: none; }
+      .spotlight { grid-template-columns: 1fr; gap: 32px; }
+      .spotlight-body { padding: 0; }
+      .next-project { padding: 32px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 60px; }
+      nav { padding: 0 20px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .contrib-grid { grid-template-columns: 1fr; }
+      .contrib-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .contrib-item:last-child { border-bottom: none; }
+    }
   </style>
 </head>
 <body>
+
 <nav id="navbar">
-  <a href="../index.html" class="logo-box"><img src="../ENTUNGLU_logo.png" alt="En Tung Lu" /></a>
+  <a href="../index.html" class="logo-box">
+    <img src="../ENTUNGLU_logo.png" alt="En Tung Lu" />
+  </a>
   <ul>
     <li><a href="../index.html" class="nav-link">Portfolio</a></li>
     <li><a href="../about.html" class="nav-link">About / Service</a></li>
     <li><a href="../contact.html" class="nav-link">Contact</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
 <div class="mobile-menu" id="mobileMenu">
   <a href="../index.html">Portfolio</a>
   <a href="../about.html">About / Service</a>
   <a href="../contact.html">Contact</a>
 </div>
+
 <main>
   <div class="project-hero">
     <a href="../index.html" class="back-link"><span>←</span> Back to Portfolio</a>
-    <div class="project-meta"><span class="meta-tag">SaaS</span><span class="meta-tag">Human Resource</span><span class="meta-tag">Enterprise</span></div>
-    <h1 class="project-title">SaaS Platform for <em>Human Resource</em> Management</h1>
-    <p class="project-subtitle">Case study content coming soon.</p>
+
+    <div class="project-meta">
+      <span class="meta-tag">SaaS</span>
+      <span class="meta-tag">Human Resource</span>
+      <span class="meta-tag">Web</span>
+      <span class="meta-tag">iOS</span>
+      <span class="meta-tag">Android</span>
+    </div>
+
+    <h1 class="project-title">SaaS Platform for<br><em>Human Resource</em> Management</h1>
+    <p class="project-subtitle">Help People Do Better</p>
+
+    <div class="stats-row">
+      <div class="stat"><div class="stat-label">Company</div><div class="stat-value">AMPOS</div></div>
+      <div class="stat"><div class="stat-label">Platform</div><div class="stat-value">Web, iOS, Android</div></div>
+      <div class="stat"><div class="stat-label">Date</div><div class="stat-value">2019–2021</div></div>
+      <div class="stat"><div class="stat-label">Role</div><div class="stat-value">Product Designer</div></div>
+    </div>
   </div>
-  <a href="fitobe.html" class="next-project">
-    <p class="next-label">Next Project</p>
-    <p class="next-title">FiToBe: Health and Life Platform →</p>
-    <span class="next-arrow">→</span>
-  </a>
+
+  <!-- Cover -->
+  <div class="project-cover">
+    <img src="../Portfolio/Ampos-2/AMPOS_01.webp" alt="AMPOS SaaS HR Platform" />
+  </div>
+
+  <div class="project-content">
+
+    <!-- Overview -->
+    <div class="reveal">
+      <p class="section-label">AMPOS — <a href="https://www.ampostech.com" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none;">www.ampostech.com</a></p>
+      <h2 class="section-heading">Human Resource Management System</h2>
+      <p class="section-text">Talent development is vital for long-term business success. Unlike traditional Asian talent management, we focus on "Help People Do Better" to offer modular HR solutions.</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Vision -->
+    <div class="reveal">
+      <p class="section-label">Vision</p>
+      <h2 class="section-heading">Optimizing Enterprise Efficiency through Systematized Human Resources</h2>
+      <div class="img-block">
+        <img src="../Portfolio/Ampos-2/AMPOS_03.webp" alt="AMPOS Vision" />
+      </div>
+      <p class="section-text">We provide full-scale solutions, not just tools. Our approach systematizes processes like a HR training company, integrating consultancy techniques. We scientifically handle repetitive tasks from data acquisition to survey analysis. Our flexible, standardized, modular design helps companies improve HR management quickly. We also customize solutions to fit each organization's needs.</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Design Guideline -->
+    <div class="reveal">
+      <p class="section-label">Design Guideline</p>
+      <div class="img-block">
+        <img src="../Portfolio/Ampos-2/AMPOS_04.webp" alt="AMPOS Design Guideline" />
+      </div>
+      <p class="section-text">To ensure consistency in style, detailed definitions are needed for layout, colors, tables, components, and icons. The Style Guideline serves not only as a guide for the design team but also facilitates effective communication with other development teams.</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Modular Solutions -->
+    <div class="reveal">
+      <p class="section-label">Providing Modular Human Resources Development Solutions</p>
+      <div class="module-grid">
+        <div class="module-item">
+          <div class="module-img"><img src="../Portfolio/Ampos-2/AMPOS_05-1.webp" alt="Linking Challenges to Performance" /></div>
+          <div class="module-body">
+            <p class="module-title">Linking Challenges to Performance</p>
+            <p class="module-text">The gamification model incentivizes employees to engage with challenging tasks by tying them to performance metrics, ultimately enhancing efficiency and productivity.</p>
+          </div>
+        </div>
+        <div class="module-item">
+          <div class="module-img"><img src="../Portfolio/Ampos-2/AMPOS_05-3.webp" alt="Real-time Performance Tracking" /></div>
+          <div class="module-body">
+            <p class="module-title">Real-time Performance Tracking</p>
+            <p class="module-text">Real-time Performance Tracking facilitates easy monitoring of announcements, employee feedback, surveys, and departmental chat groups. It enhances communication and organizational effectiveness.</p>
+          </div>
+        </div>
+        <div class="module-item">
+          <div class="module-img"><img src="../Portfolio/Ampos-2/AMPOS_05-2.webp" alt="Customized Learning Journeys" /></div>
+          <div class="module-body">
+            <p class="module-title">Customized Learning Journeys</p>
+            <p class="module-text">Integrate online and offline training resources, allowing employees to focus on improving job skills and creating customized learning journeys tailored to their needs with permission control.</p>
+          </div>
+        </div>
+        <div class="module-item">
+          <div class="module-img"><img src="../Portfolio/Ampos-2/AMPOS_05-4.webp" alt="Organizational Communication" /></div>
+          <div class="module-body">
+            <p class="module-title">Organizational Communication</p>
+            <p class="module-text">Announcements, Employee Feedback, Survey, and Messaging capabilities grouped by departments support a two-way channel to enhance communication efficiency.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Journey Spotlight -->
+    <div class="reveal">
+      <div class="spotlight">
+        <div class="spotlight-img">
+          <img src="../Portfolio/Ampos-2/AMPOS_06.webp" alt="Journey Onboarding" />
+        </div>
+        <div class="spotlight-body">
+          <p class="spotlight-label">Journey</p>
+          <h3 class="spotlight-title">Designing a stellar onboarding journey for new hires</h3>
+          <p class="spotlight-text">Journey defines onboarding as a systematic approach to integrating new employees with a company's culture, providing them with the tools and information needed for productivity. A well-designed, engaging onboarding process significantly boosts employee engagement.</p>
+          <a href="journey.html" class="spotlight-link">Check out how Journey was designed →</a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Talent Management System -->
+    <div class="reveal">
+      <p class="section-label">Talent Management System</p>
+      <h2 class="section-heading">Simplify and streamline complex and tedious routine reports with data science</h2>
+      <div class="img-block">
+        <img src="../Portfolio/Ampos-2/AMPOS_07.webp" alt="Talent Management System" />
+      </div>
+      <p class="section-text">The remote management platform uses big data and new technologies to help businesses with tasks like employee onboarding, transfers, salary adjustments, retention, departures, training, and performance evaluations, all fully recorded by the system.</p>
+
+      <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border);display:flex;align-items:center;gap:20px;">
+        <span style="font-family:'DM Serif Display',serif;font-size:18px;letter-spacing:.04em;">AMPOS</span>
+        <a href="https://www.ampostech.com" target="_blank" rel="noopener" style="font-size:13px;color:var(--blue);text-decoration:none;">https://www.ampostech.com</a>
+      </div>
+    </div>
+
+  </div><!-- /project-content -->
+
 </main>
+
+<!-- Next Project -->
+<a href="fitobe.html" class="next-project">
+  <div>
+    <p class="next-label">Next Project</p>
+    <p class="next-title">FiToBe: Health and Life Platform</p>
+    <p class="next-desc">Health & Life — A startup connecting wellness experts with customers seeking healthier lives in Chinese-speaking countries.</p>
+  </div>
+  <span class="next-arrow">→</span>
+</a>
+
 <footer>
   <p>© 2026 En Tung Vicky Lu — Product Designer</p>
-  <nav><ul>
-    <li><a href="../index.html">Portfolio</a></li>
-    <li><a href="../about.html">About</a></li>
-    <li><a href="../contact.html">Contact</a></li>
-  </ul></nav>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Portfolio</a></li>
+      <li><a href="../about.html">About / Service</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
 </footer>
+
 <script>
+  // Nav scroll
   const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // Hamburger
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
-  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }));
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
 </script>
 </body>
 </html>

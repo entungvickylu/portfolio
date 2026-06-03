@@ -3,24 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FiToBe — Health and Life Platform — Vicky Lu</title>
+  <title>FiToBe: Health and Life Platform — Vicky Lu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --blue: #1B1BF5; --dark: #111111; --mid: #555555; --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px; }
+    :root {
+      --blue: #1B1BF5; --dark: #111111; --mid: #555555;
+      --light: #999999; --border: #E5E5E5; --bg: #FFFFFF; --nav-h: 72px;
+    }
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); -webkit-font-smoothing: antialiased; }
+
     @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     @keyframes fadeUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; animation: slideDown .6s ease both; }
-    nav.scrolled { border-color: var(--border); }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+      z-index: 100; animation: slideDown .6s ease both;
+    }
     .logo-box { display: inline-flex; align-items: center; text-decoration: none; opacity: 1; transition: opacity .2s; }
     .logo-box:hover { opacity: 0.75; }
     .logo-box img { height: 36px; width: auto; display: block; }
     nav ul { list-style: none; display: flex; gap: 36px; }
-    nav ul li a { text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; position: relative; padding-bottom: 3px; }
+    nav ul li a {
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--mid);
+      transition: color .2s; position: relative; padding-bottom: 3px;
+    }
     nav ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 100%; height: 1.5px; background: var(--blue); transition: right .25s ease; }
     nav ul li a:hover::after { right: 0; }
     nav ul li a:hover { color: var(--dark); }
@@ -29,78 +43,306 @@
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 24px; flex-direction: column; gap: 20px; z-index: 99; }
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 24px; flex-direction: column; gap: 20px; z-index: 99;
+    }
     .mobile-menu.open { display: flex; }
     .mobile-menu a { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); }
-    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 64px; animation: fadeUp .8s .15s ease both; border-bottom: 1px solid var(--border); }
-    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s; }
+
+    /* ── HERO ── */
+    .project-hero { padding: calc(var(--nav-h) + 56px) 48px 0; animation: fadeUp .8s .15s ease both; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--light); text-decoration: none; margin-bottom: 40px; transition: color .2s;
+    }
     .back-link:hover { color: var(--blue); }
     .back-link span { font-size: 16px; transition: transform .2s; }
     .back-link:hover span { transform: translateX(-4px); }
     .project-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
     .meta-tag { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); padding: 4px 10px; }
-    .project-title { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: clamp(32px, 5vw, 60px); line-height: 1.08; letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px; }
+    .project-title {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(32px, 5vw, 60px); line-height: 1.08;
+      letter-spacing: -.02em; margin-bottom: 24px; max-width: 900px;
+    }
     .project-title em { font-style: italic; color: var(--blue); }
-    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; }
-    .next-project { display: block; padding: 64px 48px; background: var(--dark); color: #fff; text-decoration: none; transition: background .3s; }
-    .next-project:hover { background: #1a1a1a; }
-    .next-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
-    .next-title { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 4vw, 48px); line-height: 1.1; }
-    .next-arrow { font-size: 32px; margin-top: 20px; display: block; transition: transform .3s; }
+    .project-subtitle { font-size: 18px; color: var(--mid); line-height: 1.65; max-width: 680px; margin-bottom: 48px; }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .stat { padding: 28px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background .2s; cursor: default; }
+    .stat:hover { background: #fafafa; }
+    .stat:hover .stat-value { color: var(--blue); }
+    .stat-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .stat-value { font-size: 16px; font-weight: 600; color: var(--dark); transition: color .2s; }
+
+    /* ── COVER ── */
+    .project-cover {
+      width: 100%; aspect-ratio: 16/7;
+      background: linear-gradient(to top, #c2e8e8 0%, #f0fafa 100%);
+      overflow: hidden; cursor: pointer;
+    }
+    .project-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+    .project-cover:hover img { transform: scale(1.03); }
+
+    /* ── CONTENT ── */
+    .project-content { padding: 80px 15%; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-heading {
+      font-family: 'DM Serif Display', serif; font-weight: 400;
+      font-size: clamp(24px, 3vw, 36px); line-height: 1.2; margin-bottom: 20px; max-width: 680px;
+    }
+    .section-text { font-size: 16px; line-height: 1.8; color: var(--mid); margin-bottom: 16px; max-width: 680px; }
+    .content-divider { border: none; border-top: 1px solid var(--border); margin: 60px 0; }
+
+    /* Full-width image block */
+    .img-block { width: 100%; overflow: hidden; margin: 32px 0; }
+    .img-block img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .img-block:hover img { transform: scale(1.02); }
+
+    /* Sub-section headings */
+    .sub-heading { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 12px; margin-top: 40px; }
+    .sub-text { font-size: 15px; color: var(--mid); line-height: 1.8; margin-bottom: 16px; max-width: 720px; }
+
+    /* Launching 2-col layout */
+    .launch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 32px; }
+    .launch-col .sub-heading { margin-top: 0; }
+    .launch-col .sub-text { max-width: 100%; }
+
+    /* Style guide grid */
+    .style-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; }
+    .style-grid-item { overflow: hidden; }
+    .style-grid-item img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .style-grid-item:hover img { transform: scale(1.03); }
+
+    /* Feature blocks */
+    .feature-list { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+    .feature-block { border: 1px solid var(--border); border-bottom: none; overflow: hidden; transition: background .2s; }
+    .feature-block:last-child { border-bottom: 1px solid var(--border); }
+    .feature-block:hover { background: #fafafa; }
+    .feature-img { width: 100%; overflow: hidden; }
+    .feature-img img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+    .feature-block:hover .feature-img img { transform: scale(1.02); }
+    .feature-body { padding: 28px 32px 36px; }
+    .feature-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
+    .feature-text { font-size: 15px; color: var(--mid); line-height: 1.8; max-width: 720px; }
+
+    /* Closing block */
+    .closing-heading { font-family: 'DM Serif Display', serif; font-size: clamp(22px, 3vw, 32px); line-height: 1.3; margin-bottom: 20px; max-width: 680px; }
+    .closing-text { font-size: 16px; color: var(--mid); line-height: 1.8; max-width: 680px; }
+
+    /* ── NEXT PROJECT ── */
+    .next-project {
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 48px; text-decoration: none; color: var(--dark); transition: background .2s;
+    }
+    .next-project:hover { background: #fafafa; }
+    .next-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--light); margin-bottom: 8px; }
+    .next-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; margin-bottom: 8px; }
+    .next-desc { font-size: 14px; color: var(--light); line-height: 1.6; max-width: 480px; }
+    .next-arrow { font-size: 32px; color: var(--blue); transition: transform .3s; }
     .next-project:hover .next-arrow { transform: translateX(8px); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
     footer { padding: 24px 48px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
     footer p { font-size: 13px; color: var(--light); }
     footer nav ul { list-style: none; display: flex; gap: 24px; }
     footer nav ul li a { text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); transition: color .2s; }
     footer nav ul li a:hover { color: var(--dark); }
     footer nav { position: static !important; height: auto !important; background: none !important; backdrop-filter: none !important; border: none !important; animation: none !important; padding: 0 !important; z-index: auto !important; }
-    @media (max-width: 900px) { nav { padding: 0 24px; } nav ul { display: none; } .hamburger { display: flex; } .project-hero { padding: calc(var(--nav-h) + 32px) 24px 48px; } .next-project { padding: 48px 24px; } footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; } }
-    @media (max-width: 600px) { :root { --nav-h: 60px; } nav { padding: 0 20px; } }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .project-hero { padding: calc(var(--nav-h) + 32px) 24px 0; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .project-content { padding: 48px 24px; }
+      .launch-grid { grid-template-columns: 1fr; gap: 32px; }
+      .next-project { padding: 32px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+    }
+    @media (max-width: 600px) {
+      :root { --nav-h: 60px; }
+      nav { padding: 0 20px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .style-grid { grid-template-columns: 1fr; }
+      .feature-body { padding: 20px 20px 28px; }
+    }
   </style>
 </head>
 <body>
+
 <nav id="navbar">
-  <a href="../index.html" class="logo-box"><img src="../ENTUNGLU_logo.png" alt="En Tung Lu" /></a>
+  <a href="../index.html" class="logo-box">
+    <img src="../ENTUNGLU_logo.png" alt="En Tung Lu" />
+  </a>
   <ul>
     <li><a href="../index.html" class="nav-link">Portfolio</a></li>
     <li><a href="../about.html" class="nav-link">About / Service</a></li>
     <li><a href="../contact.html" class="nav-link">Contact</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
 <div class="mobile-menu" id="mobileMenu">
   <a href="../index.html">Portfolio</a>
   <a href="../about.html">About / Service</a>
   <a href="../contact.html">Contact</a>
 </div>
+
 <main>
   <div class="project-hero">
     <a href="../index.html" class="back-link"><span>←</span> Back to Portfolio</a>
-    <div class="project-meta"><span class="meta-tag">Health</span><span class="meta-tag">Mobile</span></div>
-    <h1 class="project-title">FiToBe: <em>Health</em> and Life Platform</h1>
-    <p class="project-subtitle">Case study content coming soon.</p>
+
+    <div class="project-meta">
+      <span class="meta-tag">Health</span>
+      <span class="meta-tag">Web</span>
+      <span class="meta-tag">Startup</span>
+    </div>
+
+    <h1 class="project-title"><em>FiToBe</em><br>Health and Life Platform</h1>
+    <p class="project-subtitle">Bringing positive and healthy effect to life through wellness expertise.</p>
+
+    <div class="stats-row">
+      <div class="stat"><div class="stat-label">Company</div><div class="stat-value">Watics</div></div>
+      <div class="stat"><div class="stat-label">Platform</div><div class="stat-value">Web</div></div>
+      <div class="stat"><div class="stat-label">Date</div><div class="stat-value">2018–2019</div></div>
+      <div class="stat"><div class="stat-label">Role</div><div class="stat-value">Product Designer</div></div>
+    </div>
   </div>
-  <a href="pinsoul.html" class="next-project">
-    <p class="next-label">Next Project</p>
-    <p class="next-title">Pinsoul: Psychological Therapy App →</p>
-    <span class="next-arrow">→</span>
-  </a>
+
+  <!-- Cover -->
+  <div class="project-cover">
+    <img src="../Portfolio/FiToBe/FiToBe01.webp" alt="FiToBe Health and Life Platform" />
+  </div>
+
+  <div class="project-content">
+
+    <!-- Overview -->
+    <div class="reveal">
+      <p class="section-label">FiToBe</p>
+      <h2 class="section-heading">Health and Life Platform</h2>
+      <p class="section-text">FiToBe is a Start-up in Taiwan striving to bring positive and healthy effect to life by matching wellness experts in the field of diet, sport and life with customers in Chinese-speaking countries.</p>
+      <p class="section-text">In order to address our targeted markets, we developed a simple but meaningful business model and user experience, and integrated these concepts in our service platform to actively offer our best service on.</p>
+      <p class="section-text">During our development, we worked tightly with a number of wellness experts and improved our platform prototype within limited time. By putting tremendous emphasis on customer experience, we are able to bring more added value to our brand and increase customer loyalty.</p>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Launching the Startup -->
+    <div class="reveal">
+      <p class="section-label">Launching the Startup</p>
+      <div class="launch-grid">
+        <div class="launch-col">
+          <h3 class="sub-heading">The Spark</h3>
+          <p class="sub-text">Tremendous amount of thoughts and questions occurred to us during our market research and analysis. Building upon the core values we believe in and upon the gap in the market, our initial version was launched according to our plan after a short development period. The balance between our value and the cost was taken into serious consideration while we were prioritizing the ideas to put in this platform.</p>
+        </div>
+        <div class="launch-col">
+          <h3 class="sub-heading">The Strategic Approach</h3>
+          <p class="sub-text">At the beginning of FiToBe's founding, we established a platform for sharing the knowledge of health and life in order to observe the market trend and to grab attention from the public. We have also been working with experts in the fields to obtain a great amount of user needs while the development team was working on the MVP, in which our thoughts and gained knowledge are integrated to fulfill user needs and reach our targeted market.</p>
+          <p class="sub-text">At the stage of our early growth, we kept optimizing our platform and, most importantly, opened our platform to a new customer spectrum. Consequently, the platform expanded to a wider usage and brought a lot more users to us.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- Getting User to Love the Service -->
+    <div class="reveal">
+      <p class="section-label">Getting User to Love the Service</p>
+      <div class="feature-list">
+        <div class="feature-block">
+          <div class="feature-img">
+            <img src="../Portfolio/FiToBe/FiToBe02.webp" alt="FiToBe and ProFiToBeX" />
+          </div>
+          <div class="feature-body">
+            <p class="feature-title">FiToBe & ProFiToBeX</p>
+            <p class="feature-text">Two types of user spectrum were identified from our research. We launched FiToBe and ProFiToBe accordingly. FiToBe targets those who desire to clearly understand what an expert does and purchase their services easily online. ProFiToBeX is a platform designed for experts to offer their services — they can create their own pages, build their own brand name, open courses, and handle them online. Building upon a logical structure, a comprehensive user interface with a simple visual style is born for all users to gain an excellent experience while fulfilling their needs.</p>
+          </div>
+        </div>
+        <div class="feature-block">
+          <div class="feature-img">
+            <img src="../Portfolio/FiToBe/FiToBe03.webp" alt="Behind the Interface Design" />
+          </div>
+          <div class="feature-body">
+            <p class="feature-title">Behind the Interface Design</p>
+            <p class="feature-text">The visual design approach taken in designing the user interface is based on the principles of user-centered design and user testing to effectively solve issues and to maximally optimize the user experience. In addition, we optimize our platform for it to fit on different devices, so that gestures such as zoom, pan and scroll can be greatly reduced for maximal readability and usability.</p>
+          </div>
+        </div>
+        <div class="feature-block">
+          <div class="feature-img">
+            <img src="../Portfolio/FiToBe/FiToBe04.webp" alt="Expert as a Service" />
+          </div>
+          <div class="feature-body">
+            <p class="feature-title">Expert as a Service</p>
+            <p class="feature-text">The experts on FiToBe are our service. We offer a convenient tool solving the issues that experts face when providing their services to customers. Additionally, a wide variety of tariffs and services are available to those professionals in order for them to start providing their expertise to people easily on the FiToBe platform.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="content-divider" />
+
+    <!-- A Delightful Experience -->
+    <div class="reveal">
+      <p class="section-label">A Delightful Experience</p>
+      <h2 class="closing-heading">FiToBe offers an effective tool and refreshing experience for people to reach Health and Life services.</h2>
+      <p class="closing-text">We listen to users' needs and improve our product service. Through this iterative optimization, satisfaction and happiness are brought to our users.</p>
+    </div>
+
+  </div><!-- /project-content -->
 </main>
+
+<!-- Next Project -->
+<a href="pinsoul.html" class="next-project">
+  <div>
+    <p class="next-label">Next Project</p>
+    <p class="next-title">PinSoul</p>
+    <p class="next-desc">Psychological Therapy App — helping people live better through mood tracking and the concept of sharing.</p>
+  </div>
+  <span class="next-arrow">→</span>
+</a>
+
 <footer>
   <p>© 2026 En Tung Vicky Lu — Product Designer</p>
-  <nav><ul>
-    <li><a href="../index.html">Portfolio</a></li>
-    <li><a href="../about.html">About</a></li>
-    <li><a href="../contact.html">Contact</a></li>
-  </ul></nav>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Portfolio</a></li>
+      <li><a href="../about.html">About / Service</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
 </footer>
+
 <script>
   const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 10);
+  });
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
-  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }));
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
 </script>
 </body>
 </html>
