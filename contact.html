@@ -131,6 +131,8 @@
       border-color: var(--border); color: var(--mid);
     }
     .btn-outline.btn-ghost:hover { border-color: var(--dark); background: var(--dark); color: #fff; }
+    .btn-copy { cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; background: none; transition: background .2s, color .2s; }
+    .btn-copy.copied { background: #111; color: #fff; border-color: #111; }
 
     /* ── SOCIAL ICONS ── */
     .social-row { display: flex; align-items: center; gap: 10px; }
@@ -222,6 +224,7 @@
 
     <div class="contact-btns">
       <a href="mailto:entungvickylu@gmail.com" class="btn-outline">Email Me Directly</a>
+      <button class="btn-outline btn-copy" id="copyEmailBtn" onclick="copyEmail()">Copy Email Address</button>
       <a href="about.html#services" class="btn-outline btn-ghost">View My Services</a>
     </div>
 
@@ -275,6 +278,18 @@
   }
   updateTime();
   setInterval(updateTime, 1000);
+
+  function copyEmail() {
+    navigator.clipboard.writeText('entungvickylu@gmail.com').then(() => {
+      const btn = document.getElementById('copyEmailBtn');
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy Email Address';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
 </script>
 </body>
 </html>
