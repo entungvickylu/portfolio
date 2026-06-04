@@ -131,8 +131,8 @@
       border-color: var(--border); color: var(--mid);
     }
     .btn-outline.btn-ghost:hover { border-color: var(--dark); background: var(--dark); color: #fff; }
-    .btn-copy { cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; background: none; transition: background .2s, color .2s; }
-    .btn-copy.copied { background: #111; color: #fff; border-color: #111; }
+    .btn-outline.copied { background: #111 !important; color: #fff !important; border-color: #111 !important; }
+    .social-icon.copied { background: #111 !important; border-color: #111 !important; }
 
     /* ── SOCIAL ICONS ── */
     .social-row { display: flex; align-items: center; gap: 10px; }
@@ -223,15 +223,14 @@
     <p class="contact-availability">I'm currently available for product strategy, high-complexity UX solutions, and rapid prototyping. Let's discuss how I can help navigate your product's next challenge.</p>
 
     <div class="contact-btns">
-      <a href="mailto:entungvickylu@gmail.com" class="btn-outline">Email Me Directly</a>
-      <button class="btn-outline btn-copy" id="copyEmailBtn" onclick="copyEmail()">Copy Email Address</button>
+      <a href="mailto:entungvickylu@gmail.com" class="btn-outline" id="emailBtn" onclick="handleEmail(event)" aria-label="Email Me">Email Me</a>
       <a href="about.html#services" class="btn-outline btn-ghost">View My Services</a>
     </div>
 
     <hr class="contact-divider" />
 
     <div class="social-row">
-      <a href="mailto:entungvickylu@gmail.com" class="social-icon" aria-label="Email">
+      <a href="mailto:entungvickylu@gmail.com" class="social-icon" id="emailIcon" aria-label="Email" onclick="handleEmail(event)">
         <svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
       </a>
       <a href="https://www.linkedin.com/in/entungvickylu/" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
@@ -279,16 +278,28 @@
   updateTime();
   setInterval(updateTime, 1000);
 
-  function copyEmail() {
-    navigator.clipboard.writeText('entungvickylu@gmail.com').then(() => {
-      const btn = document.getElementById('copyEmailBtn');
-      btn.textContent = 'Copied!';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = 'Copy Email Address';
-        btn.classList.remove('copied');
-      }, 2000);
-    });
+  function isMobile() {
+    return /Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) || navigator.maxTouchPoints > 1;
+  }
+
+  function handleEmail(e) {
+    if (!isMobile()) {
+      e.preventDefault();
+      navigator.clipboard.writeText('entungvickylu@gmail.com').then(() => {
+        const btn = document.getElementById('emailBtn');
+        const icon = document.getElementById('emailIcon');
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        icon.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+          icon.classList.remove('copied');
+        }, 2000);
+      });
+    }
+    // Mobile: default mailto: behaviour
   }
 </script>
 </body>
